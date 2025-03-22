@@ -9,27 +9,33 @@ export const fetchWorldData = async () => {
   try {
     const { data } = await axios.get(WORLD_URL, {
       headers: config.REQUEST_HEADERS,
+      timeout: 15000,
     });
 
     const $ = cheerio.load(data);
 
+    const extractNumber = (selector) => {
+      return $(selector)
+        .find(".rts-nr-int")
+        .toArray()
+        .map((el) => $(el).text().trim())
+        .join("")
+        .replace(/,/g, "");
+    };
+
     return {
-      current_population: parseNumber($(".rts-counter span").first().text()),
-      births_today: parseNumber(
-        $('div:contains("Births today")')
-          .closest(".col-md-3")
-          .find(".rts-counter")
-          .text()
+      current_population: parseNumber(
+        extractNumber('span[rel="current_population"]')
       ),
-      deaths_today: parseNumber(
-        $('div:contains("Deaths today")')
-          .closest(".col-md-3")
-          .find(".rts-counter")
-          .text()
+      births_today: parseNumber(extractNumber('span[rel="births_today"]')),
+      deaths_today: parseNumber(extractNumber('span[rel="dth1s_today"]')),
+      population_growth: parseNumber(
+        extractNumber('span[rel="absolute_growth"]')
       ),
+      "@timestamp": new Date().toISOString(),
     };
   } catch (error) {
-    console.error("Dünya verileri çekilirken hata:", error.message);
+    console.error("Dünya verileri çekilirken hata:", error);
     return null;
   }
 };

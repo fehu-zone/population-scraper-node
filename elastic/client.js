@@ -23,15 +23,18 @@ export const initIndex = async () => {
       index: config.INDEX_NAME,
       body: {
         mappings: {
+          dynamic: "strict",
           properties: {
             country: { type: "keyword" },
-            current_population: { type: "integer" },
-            yearly_change: { type: "float" },
+            current_population: { type: "long" },
+            yearly_change: { type: "scaled_float", scaling_factor: 100 },
             net_change: { type: "integer" },
             migrants: { type: "integer" },
             med_age: { type: "float" },
+            population_growth: { type: "integer" },
             "@timestamp": { type: "date" },
             is_current: { type: "boolean" },
+            type: { type: "keyword" },
           },
         },
       },
