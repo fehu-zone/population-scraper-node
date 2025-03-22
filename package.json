@@ -1,0 +1,16 @@
+{
+  "name": "population-scraper-node",
+  "version": "1.0.0",
+  "description": "Code snippet that scrapes the Node.js based Worldometer website",
+  "type": "module",
+  "main": "main.js",
+  "scripts": {
+    "start": "node main.js"
+  },
+  "dependencies": {
+    "@elastic/elasticsearch": "^8.7.0",
+    "axios": "^1.4.0",
+    "cheerio": "^1.0.0-rc.12",
+    "dotenv": "^16.0.0"
+  }
+}
