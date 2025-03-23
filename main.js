@@ -1,239 +1,190 @@
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 import dotenv from "dotenv";
-import axios from "axios";
-import * as cheerio from "cheerio";
-import { Client } from "@elastic/elasticsearch";
+import { fetchCountryDataDynamic } from "./scraper/countryDataDynamic.js";
+import { fetchWorldDataDynamic } from "./scraper/worldDataDynamic.js";
+import { initIndex, markCurrentSnapshot, client } from "./elastic/client.js";
 
 dotenv.config();
 
-// ================= CONFIG =================
-const config = {
-  ELASTICSEARCH_HOST: process.env.ELASTICSEARCH_HOST,
-  INDEX_NAME: process.env.INDEX_NAME,
-  ELASTIC_USERNAME: process.env.ELASTIC_USERNAME,
-  ELASTIC_PASSWORD: process.env.ELASTIC_PASSWORD,
-  REQUEST_HEADERS: {
-    "User-Agent": process.env.USER_AGENT,
-  },
-  COUNTRY_URL: process.env.COUNTRY_URL,
-  WORLD_URL: process.env.WORLD_URL,
+// Gelişmiş Loglama Sistemi
+const logger = {
+  info: (message) =>
+    console.log(
+      `\x1b[36mℹ️ [${new Date().toLocaleTimeString()}] ${message}\x1b[0m`
+    ),
+  success: (message) =>
+    console.log(
+      `\x1b[32m✅ [${new Date().toLocaleTimeString()}] ${message}\x1b[0m`
+    ),
+  error: (message) =>
+    console.log(
+      `\x1b[31m❌ [${new Date().toLocaleTimeString()}] ${message}\x1b[0m`
+    ),
+  warn: (message) =>
+    console.log(
+      `\x1b[33m⚠️ [${new Date().toLocaleTimeString()}] ${message}\x1b[0m`
+    ),
 };
 
-// ================= ELASTICSEARCH CLIENT =================
-const client = new Client({
-  node: config.ELASTICSEARCH_HOST,
-  auth: {
-    username: config.ELASTIC_USERNAME,
-    password: config.ELASTIC_PASSWORD,
-  },
-  tls: { rejectUnauthorized: false },
-});
-
-// ================= UTILITIES =================
-const parseNumber = (str) => {
-  if (!str) return null;
-  const num = str.replace(/[^\d-]/g, "");
-  return num.length ? parseInt(num, 10) : null;
-};
-
-const parsePercentage = (str) => {
-  const cleanStr = str.replace(/%/g, "").replace(/,/g, ".");
-  return parseFloat(cleanStr) || null;
-};
-
-const colors = {
-  cyan: "\x1b[36m",
-  green: "\x1b[32m",
-  red: "\x1b[31m",
-  yellow: "\x1b[33m",
-  reset: "\x1b[0m",
-};
-
-const log = (emoji, color, message) => {
-  const timestamp = new Date().toLocaleTimeString();
-  console.log(
-    `${colors[color]}${emoji} [${timestamp}] ${message}${colors.reset}`
-  );
-};
-
-// ... (importlar aynı)
-
-// ================= ELASTICSEARCH OPERATIONS =================
-const initIndex = async () => {
-  try {
-    const { body: exists } = await client.indices.exists({
-      index: config.INDEX_NAME,
-    });
-
-    if (exists) {
-      log("ℹ️", "cyan", `Index "${config.INDEX_NAME}" zaten mevcut`);
-      return { exists: true };
-    }
-
-    await client.indices.create({
-      index: config.INDEX_NAME,
-      body: {
-        mappings: {
-          dynamic: "strict",
-          properties: {
-            country: { type: "keyword" },
-            current_population: { type: "long" },
-            yearly_change: { type: "scaled_float", scaling_factor: 100 },
-            net_change: { type: "integer" },
-            migrants: { type: "integer" },
-            med_age: { type: "float" },
-            population_growth: { type: "integer" },
-            "@timestamp": { type: "date" },
-            is_current: { type: "boolean" },
-            type: { type: "keyword" },
-          },
-        },
-      },
-    });
-    log("✅", "green", `Index "${config.INDEX_NAME}" oluşturuldu`);
-    return { created: true };
-  } catch (error) {
-    log(
-      "❌",
-      "red",
-      `Index hatası: ${error.meta?.body?.error?.reason || error.message}`
-    );
-    return { error };
-  }
-};
-
-// ================= DATA SCRAPING =================
-const fetchCountryData = async () => {
-  try {
-    const { data } = await axios.get(config.COUNTRY_URL, {
-      headers: config.REQUEST_HEADERS,
-      timeout: 20000,
-    });
-
-    const $ = cheerio.load(data);
-    return $("#example2 tbody tr")
-      .map((i, row) => {
-        const cells = $(row).find("td");
-        if (cells.length < 10) return null;
-
-        const countryName = $(cells[1]).text().trim();
-        return {
-          country: COUNTRY_MAPPING[countryName] || countryName,
-          current_population: parseNumber($(cells[2]).text()),
-          yearly_change: parsePercentage($(cells[3]).text()),
-          net_change: parseNumber($(cells[4]).text()),
-          migrants: parseNumber($(cells[7]).text()),
-          med_age: parseNumber($(cells[9]).text()),
-        };
-      })
-      .get()
-      .filter((item) => item?.current_population > 0);
-  } catch (error) {
-    log("❌", "red", `Ülke veri hatası: ${error.message}`);
-    return [];
-  }
-};
-
-// ================= MAIN PROCESS =================
+// Veri Doğrulama
 const validateData = (worldData, countryData) => {
   const errors = [];
+  const EXPECTED_COUNTRIES = 235;
 
-  if (!worldData?.current_population) {
-    errors.push("Dünya nüfus verisi eksik");
+  // Dünya verisi kontrolleri
+  const worldPopulationThreshold = 7_900_000_000; // Güncel dünya nüfus eşiği
+  if (
+    !worldData?.current_population ||
+    worldData.current_population < worldPopulationThreshold
+  ) {
+    errors.push(
+      `Geçersiz dünya nüfusu: ${
+        worldData?.current_population?.toLocaleString() || "bilinmiyor"
+      }`
+    );
   }
 
-  if (!countryData?.length || countryData.length < 100) {
-    errors.push(`Yetersiz ülke verisi: ${countryData?.length || 0} kayıt`);
+  // Ülke verisi kontrolleri
+  if (!countryData?.length) {
+    errors.push("Hiç ülke verisi alınamadı");
+  } else {
+    const missingCount = EXPECTED_COUNTRIES - countryData.length;
+    if (missingCount > 0) errors.push(`Eksik ülke: ${missingCount}`);
+
+    // Kritik ülke kontrolleri
+    const criticalCountries = ["China", "India", "United States"];
+    const missingCritical = criticalCountries.filter(
+      (c) => !countryData.some((d) => d.country === c)
+    );
+    if (missingCritical.length)
+      errors.push(`Eksik kritik ülkeler: ${missingCritical.join(", ")}`);
+
+    // Veri kalite kontrolü
+    const invalidEntries = countryData.filter(
+      (c) =>
+        c.current_population <= 0 || isNaN(c.yearly_change) || isNaN(c.med_age)
+    ).length;
+    if (invalidEntries > 5)
+      errors.push(`${invalidEntries} geçersiz veri içeren ülke`);
   }
 
-  return {
-    isValid: errors.length === 0,
-    errors,
-  };
+  return { isValid: !errors.length, errors };
 };
 
+// Ana İşlem Akışı
 const processData = async () => {
   try {
-    log("🚀", "cyan", "\nScraping başlıyor...\n====================");
+    logger.info("Scraping süreci başlatılıyor...");
 
-    // 1. Index yönetimi
-    const indexResult = await initIndex();
-    if (indexResult.error) throw indexResult.error;
+    // Elasticsearch hazırlığı
+    await initIndex();
 
-    // 2. Paralel veri çekme
-    const [worldData, countryData] = await Promise.all([
-      fetchWorldData(),
-      fetchCountryData(),
+    // Paralel veri çekme
+    const [worldData, countryData] = await Promise.allSettled([
+      fetchWorldDataDynamic(),
+      fetchCountryDataDynamic(),
     ]);
 
-    // 3. Detaylı validasyon
-    const validation = validateData(worldData, countryData);
-    if (!validation.isValid) {
-      throw new Error(`Validasyon hatası: ${validation.errors.join(", ")}`);
+    // Hata yönetimi
+    const results = {
+      world: worldData.status === "fulfilled" ? worldData.value : null,
+      country: countryData.status === "fulfilled" ? countryData.value : [],
+    };
+
+    logger.info("════════════ DÜNYA VERİLERİ ════════════");
+    if (results.world) {
+      logger.info(
+        `🌍 Toplam Nüfus: ${results.world.current_population?.toLocaleString()}`
+      );
+      logger.info(
+        `👶 Bugünkü Doğum: ${results.world.births_today?.toLocaleString()}`
+      );
+      logger.info(
+        `☠️ Bugünkü Ölüm: ${results.world.deaths_today?.toLocaleString()}`
+      );
+      logger.info(
+        `📈 Net Büyüme: ${results.world.population_growth?.toLocaleString()}`
+      );
+      logger.info(
+        `📅 Yıllık Doğum: ${(
+          results.world.births_today * 365
+        ).toLocaleString()}`
+      );
+      logger.info(`⏳ Zaman Damgası: ${results.world["@timestamp"]}`);
+    } else {
+      logger.error("Dünya verisi alınamadı!");
+    }
+    logger.info("════════════════════════════════════════");
+
+    logger.info("════════════ ÜLKE VERİLERİ ════════════");
+    if (results.country.length > 0) {
+      logger.info(`✅ ${results.country.length} ülke verisi alındı`);
+      logger.info(
+        `🏆 İlk 3 Ülke: ${results.country
+          .slice(0, 3)
+          .map((c) => c.country)
+          .join(", ")}`
+      );
+      logger.info(
+        `📊 Ortalama Yaş: ${(
+          results.country.reduce((sum, c) => sum + (c.med_age || 0), 0) /
+          results.country.length
+        ).toFixed(1)}`
+      );
+    } else {
+      logger.error("⛔ Hiç ülke verisi alınamadı!");
     }
 
-    // 4. Elasticsearch'e gönder
-    const timestamp = new Date().toISOString();
-    const bulkBody = [];
+    // Validasyon
+    const validation = validateData(results.world, results.country);
+    if (!validation.isValid) {
+      throw new Error(`Validasyon Hatası:\n${validation.errors.join("\n")}`);
+    }
 
-    // Dünya verisi
-    bulkBody.push(
-      { index: { _index: config.INDEX_NAME, _id: `world_${timestamp}` } },
+    // Elasticsearch'e yazma
+    const bulkBody = results.country.flatMap((country) => [
+      { index: { _index: process.env.INDEX_NAME } },
       {
-        ...worldData,
-        type: "world",
+        ...country,
+        type: "country",
         is_current: true,
-        "@timestamp": timestamp,
-      }
-    );
+        "@timestamp": new Date().toISOString(),
+      },
+    ]);
 
-    // Ülke verileri
-    countryData.forEach((country) => {
-      bulkBody.push(
-        {
-          index: {
-            _index: config.INDEX_NAME,
-            _id: `country_${country.country}_${timestamp}`,
-          },
-        },
-        {
-          ...country,
-          type: "country",
-          is_current: true,
-          "@timestamp": timestamp,
-        }
+    if (results.world) {
+      bulkBody.unshift(
+        { index: { _index: process.env.INDEX_NAME } },
+        { ...results.world, type: "world", is_current: true }
       );
-    });
+    }
 
-    // 5. Toplu ekleme
-    const { body: bulkResponse } = await client.bulk({
+    const { body: response } = await client.bulk({
       refresh: "wait_for",
       body: bulkBody,
     });
 
-    // 6. Hata yönetimi
-    if (bulkResponse.errors) {
-      const failedDocs = bulkResponse.items
-        .filter((item) => item.index.error)
-        .map((item) => item.index._id);
-
-      log("❌", "red", `Hatalı dokümanlar: ${failedDocs.length}`);
-      console.error("Hata detayları:", failedDocs.slice(0, 3));
+    // Hata analizi
+    if (response.errors) {
+      logger.warn(
+        `Hatalı dokümanlar: ${
+          response.items.filter((i) => i.index.error).length
+        }`
+      );
+      response.items.slice(0, 3).forEach(({ index }) => {
+        if (index.error) logger.error(`Hata: ${index.error.reason}`);
+      });
     }
 
-    // 7. Snapshot güncelleme
-    await markCurrentSnapshot(timestamp);
-
-    log(
-      "🎉",
-      "green",
-      `İşlem tamamlandı! ${bulkResponse.items.length} doküman eklendi`
-    );
+    logger.success(`Başarıyla kaydedildi: ${response.items.length} kayıt`);
   } catch (error) {
-    log("💀", "red", `Kritik hata: ${error.message}`);
-    setTimeout(processData, 300000); // 5 dakika sonra tekrar dene
+    logger.error(`Kritik Hata: ${error.message}`);
+    logger.info("5 dakika sonra yeniden denenecek...");
+    setTimeout(processData, 300_000);
   }
 };
 
+// Uygulama başlatma
 console.clear();
 processData();
-setInterval(processData, 1800000); // 30 dakikada bir çalıştır
+setInterval(processData, 1_800_000);
