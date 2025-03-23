@@ -14,9 +14,8 @@ const config = {
   REQUEST_HEADERS: {
     "User-Agent": process.env.USER_AGENT,
   },
-  COUNTRY_URL:
-    "https://www.worldometers.info/world-population/population-by-country",
-  WORLD_URL: "https://www.worldometers.info/world-population/",
+  COUNTRY_URL: process.env.COUNTRY_URL,
+  WORLD_URL: process.env.WORLD_URL,
 };
 
 // ================= ELASTICSEARCH CLIENT =================
@@ -56,16 +55,18 @@ const log = (emoji, color, message) => {
   );
 };
 
+// ... (importlar aynı)
+
 // ================= ELASTICSEARCH OPERATIONS =================
 const initIndex = async () => {
   try {
-    const { statusCode } = await client.indices.exists({
+    const { body: exists } = await client.indices.exists({
       index: config.INDEX_NAME,
     });
 
-    if (statusCode === 200) {
-      log("ℹ️", "cyan", `Index "${config.INDEX_NAME}" already exists`);
-      return;
+    if (exists) {
+      log("ℹ️", "cyan", `Index "${config.INDEX_NAME}" zaten mevcut`);
+      return { exists: true };
     }
 
     await client.indices.create({
@@ -80,6 +81,7 @@ const initIndex = async () => {
             net_change: { type: "integer" },
             migrants: { type: "integer" },
             med_age: { type: "float" },
+            population_growth: { type: "integer" },
             "@timestamp": { type: "date" },
             is_current: { type: "boolean" },
             type: { type: "keyword" },
@@ -87,77 +89,35 @@ const initIndex = async () => {
         },
       },
     });
-    log("✅", "green", `Index "${config.INDEX_NAME}" created successfully`);
+    log("✅", "green", `Index "${config.INDEX_NAME}" oluşturuldu`);
+    return { created: true };
   } catch (error) {
     log(
       "❌",
       "red",
-      `Index creation error: ${
-        error.meta?.body?.error?.reason || error.message
-      }`
+      `Index hatası: ${error.meta?.body?.error?.reason || error.message}`
     );
-  }
-};
-
-const markCurrentSnapshot = async (timestamp) => {
-  try {
-    await client.updateByQuery({
-      index: config.INDEX_NAME,
-      conflicts: "proceed",
-      body: {
-        script: {
-          source: "ctx._source.is_current = params.new_status",
-          lang: "painless",
-          params: { new_status: false },
-        },
-        query: { match_all: {} },
-      },
-    });
-
-    await client.updateByQuery({
-      index: config.INDEX_NAME,
-      conflicts: "proceed",
-      body: {
-        script: {
-          source: "ctx._source.is_current = params.new_status",
-          lang: "painless",
-          params: { new_status: true },
-        },
-        query: { term: { "@timestamp": timestamp } },
-      },
-    });
-    log("🔄", "cyan", `Snapshot updated for ${timestamp}`);
-  } catch (error) {
-    log("❌", "red", `Snapshot update error: ${error.message}`);
+    return { error };
   }
 };
 
 // ================= DATA SCRAPING =================
-const COUNTRY_MAPPING = {
-  "United States": "USA",
-  Congo: "DR Congo",
-  Iran: "Iran (Islamic Republic of)",
-  Vietnam: "Viet Nam",
-  "South Korea": "Republic of Korea",
-};
-
 const fetchCountryData = async () => {
   try {
     const { data } = await axios.get(config.COUNTRY_URL, {
       headers: config.REQUEST_HEADERS,
-      timeout: 15000,
+      timeout: 20000,
     });
 
     const $ = cheerio.load(data);
-    const rows = $("#example2 tbody tr");
-
-    return rows
+    return $("#example2 tbody tr")
       .map((i, row) => {
         const cells = $(row).find("td");
+        if (cells.length < 10) return null;
+
+        const countryName = $(cells[1]).text().trim();
         return {
-          country:
-            COUNTRY_MAPPING[$(cells[1]).text().trim()] ||
-            $(cells[1]).text().trim(),
+          country: COUNTRY_MAPPING[countryName] || countryName,
           current_population: parseNumber($(cells[2]).text()),
           yearly_change: parsePercentage($(cells[3]).text()),
           net_change: parseNumber($(cells[4]).text()),
@@ -166,40 +126,10 @@ const fetchCountryData = async () => {
         };
       })
       .get()
-      .filter((item) => item.current_population);
+      .filter((item) => item?.current_population > 0);
   } catch (error) {
-    log("❌", "red", `Country data error: ${error.message}`);
+    log("❌", "red", `Ülke veri hatası: ${error.message}`);
     return [];
-  }
-};
-
-const fetchWorldData = async () => {
-  try {
-    const { data } = await axios.get(config.WORLD_URL, {
-      headers: config.REQUEST_HEADERS,
-      timeout: 15000,
-    });
-
-    const $ = cheerio.load(data);
-    const mainCounter = parseNumber(
-      $(".rts-counter").first().text().replace(/,/g, "")
-    );
-    const counters = $(".counter-item")
-      .slice(0, 2)
-      .map((i, el) =>
-        parseNumber($(el).find(".counter-value").text().replace(/,/g, ""))
-      )
-      .get();
-
-    return {
-      current_population: mainCounter,
-      births_today: counters[0],
-      deaths_today: counters[1],
-      "@timestamp": new Date().toISOString(),
-    };
-  } catch (error) {
-    log("❌", "red", `World data error: ${error.message}`);
-    return null;
   }
 };
 
@@ -207,11 +137,12 @@ const fetchWorldData = async () => {
 const validateData = (worldData, countryData) => {
   const errors = [];
 
-  if (!worldData?.current_population)
-    errors.push("Invalid world population data");
-  if (!countryData?.length) errors.push("No country data available");
-  if (worldData && typeof worldData.current_population !== "number") {
-    errors.push("Invalid world population format");
+  if (!worldData?.current_population) {
+    errors.push("Dünya nüfus verisi eksik");
+  }
+
+  if (!countryData?.length || countryData.length < 100) {
+    errors.push(`Yetersiz ülke verisi: ${countryData?.length || 0} kayıt`);
   }
 
   return {
@@ -222,46 +153,40 @@ const validateData = (worldData, countryData) => {
 
 const processData = async () => {
   try {
-    log(
-      "🚀",
-      "cyan",
-      "\nStarting scraping process...\n========================="
-    );
+    log("🚀", "cyan", "\nScraping başlıyor...\n====================");
 
-    // Index initialization
-    log("🔧", "cyan", "Checking Elasticsearch index...");
-    await initIndex();
+    // 1. Index yönetimi
+    const indexResult = await initIndex();
+    if (indexResult.error) throw indexResult.error;
 
-    // Data collection
-    log("🌍", "yellow", "Fetching world data...");
-    const worldData = await fetchWorldData();
+    // 2. Paralel veri çekme
+    const [worldData, countryData] = await Promise.all([
+      fetchWorldData(),
+      fetchCountryData(),
+    ]);
 
-    log("🌐", "yellow", "Fetching country data...");
-    const countryData = await fetchCountryData();
-
-    // Data validation
+    // 3. Detaylı validasyon
     const validation = validateData(worldData, countryData);
     if (!validation.isValid) {
-      log("❌", "red", `Validation failed: ${validation.errors.join(", ")}`);
-      return;
+      throw new Error(`Validasyon hatası: ${validation.errors.join(", ")}`);
     }
 
-    // Prepare documents
+    // 4. Elasticsearch'e gönder
     const timestamp = new Date().toISOString();
     const bulkBody = [];
 
-    // Add world data
+    // Dünya verisi
     bulkBody.push(
       { index: { _index: config.INDEX_NAME, _id: `world_${timestamp}` } },
       {
         ...worldData,
-        "@timestamp": timestamp,
         type: "world",
         is_current: true,
+        "@timestamp": timestamp,
       }
     );
 
-    // Add country data
+    // Ülke verileri
     countryData.forEach((country) => {
       bulkBody.push(
         {
@@ -272,53 +197,43 @@ const processData = async () => {
         },
         {
           ...country,
-          "@timestamp": timestamp,
           type: "country",
           is_current: true,
+          "@timestamp": timestamp,
         }
       );
     });
 
-    // Data ingestion
-    log(
-      "📤",
-      "cyan",
-      "\nSending data to Elasticsearch...\n-----------------------------"
-    );
+    // 5. Toplu ekleme
     const { body: bulkResponse } = await client.bulk({
       refresh: "wait_for",
       body: bulkBody,
     });
 
+    // 6. Hata yönetimi
     if (bulkResponse.errors) {
-      const errorCount = bulkResponse.items.filter(
-        (item) => item.index.error
-      ).length;
-      log("❌", "red", `Failed documents: ${errorCount}`);
-    } else {
-      log(
-        "✅",
-        "green",
-        `Successfully ingested ${bulkResponse.items.length} documents`
-      );
+      const failedDocs = bulkResponse.items
+        .filter((item) => item.index.error)
+        .map((item) => item.index._id);
+
+      log("❌", "red", `Hatalı dokümanlar: ${failedDocs.length}`);
+      console.error("Hata detayları:", failedDocs.slice(0, 3));
     }
 
-    // Update current snapshot
-    log("🔁", "cyan", "\nUpdating current snapshot...");
+    // 7. Snapshot güncelleme
     await markCurrentSnapshot(timestamp);
 
     log(
       "🎉",
       "green",
-      "\nProcess completed successfully!\n=============================="
+      `İşlem tamamlandı! ${bulkResponse.items.length} doküman eklendi`
     );
   } catch (error) {
-    log("💀", "red", `Critical error: ${error.message}`);
-    setTimeout(processData, 5000); // Retry after 5 seconds on critical errors
+    log("💀", "red", `Kritik hata: ${error.message}`);
+    setTimeout(processData, 300000); // 5 dakika sonra tekrar dene
   }
 };
 
-// ================= INITIALIZATION =================
 console.clear();
 processData();
-setInterval(processData, 300000); // 5 minutes interval
+setInterval(processData, 1800000); // 30 dakikada bir çalıştır

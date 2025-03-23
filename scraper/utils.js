@@ -1,17 +1,22 @@
 export const parseNumber = (str) => {
-  if (!str) return null;
   const numStr = String(str)
     .replace(/[^0-9-]/g, "")
-    .replace(/--/g, "-");
-  return numStr ? parseInt(numStr, 10) : null;
+    .replace(/--/g, "-")
+    .trim();
+
+  if (!numStr || numStr === "-") return null;
+  const number = parseInt(numStr, 10);
+  return Number.isNaN(number) ? null : number;
 };
 
 export const parsePercentage = (str) => {
   const cleanStr = String(str)
     .replace(/%/g, "")
     .replace(/,/g, ".")
-    .replace(/[^\d.-]/g, "");
+    .replace(/[^\d.-]/g, "")
+    .trim();
 
+  if (!cleanStr) return null;
   const value = parseFloat(cleanStr);
-  return !isNaN(value) ? Number(value.toFixed(2)) : null;
+  return Number.isNaN(value) ? null : Number(value.toFixed(2));
 };

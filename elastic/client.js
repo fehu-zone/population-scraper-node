@@ -12,13 +12,15 @@ const client = new Client({
 
 export const initIndex = async () => {
   try {
-    const exists = await client.indices.exists({ index: config.INDEX_NAME });
-    if (exists.body) {
-      // ES 7.x+ için doğru kontrol
+    const { body: exists } = await client.indices.exists({
+      index: config.INDEX_NAME,
+    });
+
+    if (exists) {
       console.log(`Index "${config.INDEX_NAME}" zaten mevcut.`);
-      return;
+      return { exists: true };
     }
-    // İndeks oluşturulurken örnek mapping tanımı eklenmiştir. Gereksinimlerinize göre düzenleyebilirsiniz.
+
     await client.indices.create({
       index: config.INDEX_NAME,
       body: {
@@ -40,33 +42,55 @@ export const initIndex = async () => {
       },
     });
     console.log(`Index "${config.INDEX_NAME}" başarıyla oluşturuldu.`);
+    return { created: true };
   } catch (error) {
-    console.error("Index oluşturulurken hata:", error.message);
+    console.error(
+      `Index hatası: ${error.meta?.body?.error?.reason || error.message}`
+    );
+    return { error };
   }
 };
 
 export const markCurrentSnapshot = async (timestamp) => {
   try {
-    // Önce tüm dökümanların is_current alanını false yapıyoruz
     await client.updateByQuery({
       index: config.INDEX_NAME,
+      conflicts: "proceed",
       body: {
-        script: { source: "ctx._source.is_current = false", lang: "painless" },
-        query: { match_all: {} },
+        script: {
+          source: "ctx._source.is_current = false",
+          lang: "painless",
+        },
+        query: {
+          bool: {
+            filter: [{ term: { is_current: true } }],
+          },
+        },
       },
     });
 
-    // Belirtilen timestamp'e sahip dökümanın is_current alanını true yapıyoruz
     await client.updateByQuery({
       index: config.INDEX_NAME,
+      conflicts: "proceed",
       body: {
-        script: { source: "ctx._source.is_current = true", lang: "painless" },
-        query: { term: { "@timestamp": timestamp } },
+        script: {
+          source: "ctx._source.is_current = true",
+          lang: "painless",
+        },
+        query: {
+          bool: {
+            must: [
+              { term: { "@timestamp": timestamp } },
+              { term: { type: "world" } },
+            ],
+          },
+        },
       },
     });
+
     console.log(`Snapshot güncellendi: ${timestamp}`);
   } catch (error) {
-    console.error("Snapshot güncellenirken hata:", error.message);
+    console.error("Snapshot güncelleme hatası:", error.message);
   }
 };
 

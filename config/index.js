@@ -9,4 +9,6 @@ export default {
   REQUEST_HEADERS: {
     "User-Agent": process.env.USER_AGENT,
   },
+  COUNTRY_URL: process.env.COUNTRY_URL, // .env’de tanımlı
+  WORLD_URL: process.env.WORLD_URL, // .env’de tanımlı
 };
