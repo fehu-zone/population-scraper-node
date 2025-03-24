@@ -1,105 +1,160 @@
-import puppeteer from "puppeteer";
+import puppeteer from "puppeteer-extra";
+import StealthPlugin from "puppeteer-extra-plugin-stealth";
+puppeteer.use(StealthPlugin());
 import config from "../config/index.js";
 import { parseNumber, parsePercentage } from "./utils.js";
 
+const browserConfig = {
+  headless: "new",
+  ignoreHTTPSErrors: true,
+  args: [
+    "--no-sandbox",
+    "--disable-setuid-sandbox",
+    "--disable-dev-shm-usage",
+    "--disable-accelerated-2d-canvas",
+    "--disable-infobars",
+    "--single-process",
+    "--no-zygote",
+    "--disable-notifications",
+    "--disable-web-security",
+    "--disable-features=IsolateOrigins,site-per-process",
+    "--window-size=1920,1080",
+    "--lang=en-US,en",
+  ],
+  defaultViewport: null,
+  ignoreDefaultArgs: ["--disable-extensions"],
+};
+
 const COUNTRY_MAPPING = {
   "United States": "USA",
-  Congo: "DR Congo",
-  "Iran (Islamic Republic of)": "Iran",
-  "Viet Nam": "Vietnam",
+  "Congo (Dem. Rep.)": "DR Congo",
+  Iran: "Iran",
+  Vietnam: "Vietnam",
   Czechia: "Czech Republic",
-  "South Korea": "Republic of Korea",
+  "Korea, South": "South Korea",
+};
+
+const waitForTable = async (page) => {
+  try {
+    // Önce yüklenme göstergesini bekle
+    await page.waitForFunction(
+      () => {
+        const loader = document.querySelector(".loading-overlay");
+        return !loader || loader.style.display === "none";
+      },
+      { timeout: 90000 }
+    );
+
+    // Tablo için optimize edilmiş bekleme
+    await page.waitForSelector("#example2 tbody tr:nth-child(100)", {
+      visible: true,
+      timeout: 180000,
+    });
+
+    await page.waitForFunction(
+      () => {
+        const firstCell = document.querySelector(
+          "#example2 tbody tr:first-child td:nth-child(2)"
+        );
+        return firstCell?.textContent?.trim().length > 2;
+      },
+      { timeout: 60000 }
+    );
+  } catch (error) {
+    await page.screenshot({
+      path: `table-error-${Date.now()}.png`,
+      fullPage: true,
+    });
+    throw new Error(`Tablo yüklenemedi: ${error.message}`);
+  }
 };
 
 export const fetchCountryDataDynamic = async () => {
   let browser;
   try {
-    browser = await puppeteer.launch({
-      headless: "new",
-      ignoreHTTPSErrors: true,
-      args: [
-        "--no-sandbox",
-        "--disable-setuid-sandbox",
-        "--disable-dev-shm-usage",
-        "--ignore-certificate-errors",
-        "--disable-gpu",
-        "--window-size=1920,1080",
-      ],
-    });
-
+    browser = await puppeteer.launch(browserConfig);
     const page = await browser.newPage();
 
-    // Performans optimizasyonları
-    await page.setRequestInterception(true);
-    page.on("request", (req) => {
-      if (
-        ["image", "stylesheet", "font", "media"].includes(req.resourceType())
-      ) {
-        req.abort();
-      } else {
-        req.continue();
-      }
+    await page.setExtraHTTPHeaders({
+      "Accept-Language": "en-US,en;q=0.9",
+      Referer: config.COUNTRY_URL,
     });
 
-    await page.setUserAgent(config.REQUEST_HEADERS["User-Agent"]);
-    await page.setDefaultNavigationTimeout(120000);
+    await page.setUserAgent(
+      "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
+    );
 
-    // Sayfa yükleme stratejisi
+    // Navigasyon stratejisi
     await page.goto(config.COUNTRY_URL, {
       waitUntil: "domcontentloaded",
       timeout: 120000,
     });
 
-    // Gelişmiş bekleme mekanizması
-    try {
-      await page.waitForFunction(
-        () => {
-          const table = document.querySelector("#example2");
-          const rows = table?.querySelectorAll("tbody tr");
-          return (
-            rows?.length > 200 &&
-            rows[0].querySelector("td:nth-child(2)")?.textContent?.trim() !== ""
-          );
-        },
-        {
-          timeout: 60000,
-          polling: 1000,
-        }
-      );
-    } catch (error) {
-      await page.screenshot({ path: "timeout-error.png", fullPage: true });
-      throw new Error(`Tablo yüklenemedi: ${error.message}`);
+    // Scroll optimizasyonu
+    let lastHeight = 0;
+    for (let i = 0; i < 5; i++) {
+      const newHeight = await page.evaluate(async () => {
+        window.scrollTo(0, document.body.scrollHeight);
+        await new Promise((resolve) => setTimeout(resolve, 2000));
+        return document.body.scrollHeight;
+      });
+
+      if (newHeight === lastHeight) break;
+      lastHeight = newHeight;
     }
 
-    // Veri çekme
-    const countryData = await page.evaluate(() => {
-      const rows = Array.from(document.querySelectorAll("#example2 tbody tr"));
-      return rows.map((row) => {
-        const cells = Array.from(row.querySelectorAll("td"));
-        return {
-          country: cells[1]?.textContent?.trim(),
-          population: cells[2]?.textContent?.trim(),
-          yearlyChange: cells[3]?.textContent?.trim(),
-          netChange: cells[4]?.textContent?.trim(),
-          migrants: cells[7]?.textContent?.trim(),
-          medAge: cells[9]?.textContent?.trim(),
-        };
-      });
-    });
+    await waitForTable(page);
 
-    // Veri temizleme
-    return countryData
-      .map((item) => ({
-        country: COUNTRY_MAPPING[item.country] || item.country,
-        current_population: parseNumber(item.population),
-        yearly_change: parsePercentage(item.yearlyChange),
-        net_change: parseNumber(item.netChange),
-        migrants: parseNumber(item.migrants),
-        med_age: parseNumber(item.medAge),
-      }))
-      .filter((item) => item.country && item.current_population > 0);
+    const countryData = await page.evaluate((COUNTRY_MAPPING) => {
+      const parseCell = (cell, isNumber) => {
+        const text = cell?.textContent?.trim().replace(/,/g, "");
+        if (!text) return null;
+        return isNumber
+          ? Number(text.replace(/[^\d.-]/g, ""))
+          : text.replace(/\\n/g, "");
+      };
+
+      return Array.from(document.querySelectorAll("#example2 tbody tr"))
+        .map((row) => {
+          const cells = row.querySelectorAll("td");
+          if (cells.length < 10) return null;
+
+          const rawCountry = parseCell(cells[1], false);
+          const population = parseCell(cells[2], true);
+
+          if (!population || population < 1000) return null;
+
+          return {
+            country: COUNTRY_MAPPING[rawCountry] || rawCountry,
+            current_population: population,
+            yearly_change: parseCell(cells[3], true),
+            net_change: parseCell(cells[4], true),
+            migrants: parseCell(cells[7], true),
+            med_age: parseCell(cells[9], true),
+          };
+        })
+        .filter((item) => item?.country);
+    }, COUNTRY_MAPPING);
+
+    // Ek veri validasyonu
+    const validData = countryData.filter(
+      (item) =>
+        item.current_population > 1000 &&
+        item.med_age > 10 &&
+        Math.abs(item.yearly_change) < 100
+    );
+
+    if (validData.length < 50) {
+      throw new Error(`Yetersiz veri: ${validData.length} geçerli kayıt`);
+    }
+
+    return validData;
   } catch (error) {
-    console.error("Ülke veri hatası:", error);
+    console.error("Gelişmiş hata logu:", {
+      message: error.message,
+      url: config.COUNTRY_URL,
+      stack: error.stack,
+    });
     return [];
   } finally {
     if (browser) await browser.close();

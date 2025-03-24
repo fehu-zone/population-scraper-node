@@ -2,7 +2,8 @@ process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 import dotenv from "dotenv";
 import { fetchCountryDataDynamic } from "./scraper/countryDataDynamic.js";
 import { fetchWorldDataDynamic } from "./scraper/worldDataDynamic.js";
-import { initIndex, markCurrentSnapshot, client } from "./elastic/client.js";
+import { initIndex, client } from "./elastic/client.js";
+import ProgressBar from "progress";
 
 dotenv.config();
 
@@ -79,18 +80,71 @@ const processData = async () => {
     // Elasticsearch hazırlığı
     await initIndex();
 
-    // Paralel veri çekme
-    const [worldData, countryData] = await Promise.allSettled([
+    // 1. Adım: Dünya verilerini önce çek
+    logger.info("════════════ DÜNYA VERİLERİ ÇEKİLİYOR ════════════");
+    const worldBar = new ProgressBar("🌍 Dünya verisi [:bar] :percent :etas", {
+      complete: "=",
+      incomplete: " ",
+      width: 30,
+      total: 15,
+    });
+
+    const worldTimer = setInterval(() => {
+      worldBar.tick();
+      if (worldBar.complete) {
+        clearInterval(worldTimer);
+        logger.success("Dünya verisi alındı!");
+      }
+    }, 1000);
+
+    const worldData = await Promise.race([
       fetchWorldDataDynamic(),
-      fetchCountryDataDynamic(),
+      new Promise((_, reject) =>
+        setTimeout(
+          () => reject(new Error("Dünya verisi çekme zaman aşımına uğradı")),
+          120000
+        )
+      ),
     ]);
+
+    clearInterval(worldTimer); // Animasyonu durdur
+
+    // 2. Adım: Ülke verilerini dünya verisinden sonra çek
+    logger.info("\n════════════ ÜLKE VERİLERİ ÇEKİLİYOR ════════════");
+    const countryBar = new ProgressBar("🇹🇷 Ülke verisi [:bar] :percent :etas", {
+      complete: "=",
+      incomplete: " ",
+      width: 30,
+      total: 30,
+    });
+
+    const countryTimer = setInterval(() => {
+      countryBar.tick();
+      if (countryBar.complete) {
+        clearInterval(countryTimer);
+        logger.success("Ülke verisi alımı tamamlandı!");
+      }
+    }, 1000);
+
+    const countryData = await Promise.race([
+      fetchCountryDataDynamic(),
+      new Promise((_, reject) =>
+        setTimeout(
+          () => reject(new Error("Ülke verisi çekme zaman aşımına uğradı")),
+          240000
+        )
+      ),
+    ]);
+
+    clearInterval(countryTimer); // Animasyonu durdur
 
     // Hata yönetimi
     const results = {
-      world: worldData.status === "fulfilled" ? worldData.value : null,
-      country: countryData.status === "fulfilled" ? countryData.value : [],
+      world: worldData,
+      country: countryData,
     };
 
+    // Dünya verilerini loglama
     logger.info("════════════ DÜNYA VERİLERİ ════════════");
     if (results.world) {
       logger.info(
@@ -116,6 +170,7 @@ const processData = async () => {
     }
     logger.info("════════════════════════════════════════");
 
+    // Ülke verilerini loglama
     logger.info("════════════ ÜLKE VERİLERİ ════════════");
     if (results.country.length > 0) {
       logger.info(`✅ ${results.country.length} ülke verisi alındı`);
@@ -135,7 +190,7 @@ const processData = async () => {
       logger.error("⛔ Hiç ülke verisi alınamadı!");
     }
 
-    // Validasyon
+    // Veri validasyonu
     const validation = validateData(results.world, results.country);
     if (!validation.isValid) {
       throw new Error(`Validasyon Hatası:\n${validation.errors.join("\n")}`);
