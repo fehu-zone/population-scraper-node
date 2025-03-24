@@ -46,7 +46,7 @@ const validateData = (worldData, countryData) => {
   }
 
   // Ülke verisi kontrolleri
-  if (!countryData?.length) {
+  if (!countryData || !countryData.length) {
     errors.push("Hiç ülke verisi alınamadı");
   } else {
     const missingCount = EXPECTED_COUNTRIES - countryData.length;
@@ -78,6 +78,12 @@ const processData = async () => {
     // Elasticsearch hazırlığı
     await initIndex();
 
+    // Önceki verileri temizle
+    await client.deleteByQuery({
+      index: process.env.INDEX_NAME,
+      body: { query: { match: { is_current: true } } },
+    });
+
     // 1. Adım: Dünya verilerini çek
     logger.info("════════════ DÜNYA VERİLERİ ÇEKİLİYOR ════════════");
     const worldBar = new ProgressBar("🌍 Dünya verisi [:bar] :percent :etas", {
@@ -107,13 +113,15 @@ const processData = async () => {
 
     clearInterval(worldTimer);
 
-    // 2. Adım: Dünya verileri geldikten sonra 20 saniye bekle (animasyon süresi gibi kullanılabilir)
+    // 2. Adım: Dünya verisi geldikten sonra 20 saniye bekle
     logger.info("Dünya verisi alındıktan sonra 20 saniye bekleniyor...");
     await new Promise((resolve) => setTimeout(resolve, 20000));
 
-    // 3. Adım: Ülke verilerini çek
-    logger.info("\n════════════ ÜLKE VERİLERİ ÇEKİLİYOR ════════════");
-    const countryBar = new ProgressBar("🇹🇷 Ülke verisi [:bar] :percent :etas", {
+    // 3. Adım: Ülke verilerini çek (dinamik sayfadan)
+    logger.info(
+      "\n════════════ ÜLKE VERİLERİ (DİNAMİK) ÇEKİLİYOR ════════════"
+    );
+    const countryBar = new ProgressBar("🌐 Ülke verisi [:bar] :percent :etas", {
       complete: "=",
       incomplete: " ",
       width: 30,
@@ -174,7 +182,7 @@ const processData = async () => {
 
     // Ülke verilerini loglama
     logger.info("════════════ ÜLKE VERİLERİ ════════════");
-    if (results.country.length > 0) {
+    if (results.country && results.country.length > 0) {
       logger.info(`✅ ${results.country.length} ülke verisi alındı`);
       logger.info(
         `🏆 İlk 3 Ülke: ${results.country
@@ -198,7 +206,7 @@ const processData = async () => {
       throw new Error(`Validasyon Hatası:\n${validation.errors.join("\n")}`);
     }
 
-    // Elasticsearch'e yazma
+    // Elasticsearch bulk insert
     const bulkBody = results.country.flatMap((country) => [
       { index: { _index: process.env.INDEX_NAME } },
       {

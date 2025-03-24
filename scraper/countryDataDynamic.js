@@ -1,190 +1,151 @@
-import puppeteer from "puppeteer-extra";
-import StealthPlugin from "puppeteer-extra-plugin-stealth";
-import * as cheerio from "cheerio";
-puppeteer.use(StealthPlugin());
+import puppeteer from "puppeteer";
 import config from "../config/index.js";
-import { parseNumber } from "./utils.js";
+import { parseNumber, parsePercentage } from "./utils.js";
 
-const browserConfig = {
-  headless: "new",
-  ignoreHTTPSErrors: true,
-  args: [
-    "--no-sandbox",
-    "--disable-setuid-sandbox",
-    "--disable-dev-shm-usage",
-    "--disable-accelerated-2d-canvas",
-    "--disable-infobars",
-    "--single-process",
-    "--no-zygote",
-    "--disable-notifications",
-    "--disable-web-security",
-    "--disable-features=IsolateOrigins,site-per-process",
-    "--window-size=1920,1080",
-    "--lang=en-US,en",
-  ],
-  defaultViewport: null,
-  ignoreDefaultArgs: ["--disable-extensions"],
-};
-
-const COUNTRY_MAPPING = {
+const COUNTRY_NAME_MAPPING = {
   "United States": "USA",
-  "Congo (Dem. Rep.)": "DR Congo",
-  Iran: "Iran",
-  Vietnam: "Vietnam",
+  Congo: "DR Congo",
+  "Iran (Islamic Republic of)": "Iran",
+  "Viet Nam": "Vietnam",
   Czechia: "Czech Republic",
-  "Korea, South": "South Korea",
 };
 
-const waitForTable = async (page) => {
-  try {
-    // Yüklenme göstergesinin kaybolmasını bekle
-    await page.waitForFunction(
-      () => {
-        const loader = document.querySelector(".loading-overlay");
-        return !loader || loader.style.display === "none";
-      },
-      { timeout: 90000 }
-    );
-    // Tablonun belirli bir satırının görünür olduğunu garanti altına al
-    await page.waitForSelector("#example2 tbody tr:nth-child(100)", {
-      visible: true,
-      timeout: 180000,
-    });
-    // İlk hücrede beklenen içeriğin gelmesini bekle
-    await page.waitForFunction(
-      () => {
-        const firstCell = document.querySelector(
-          "#example2 tbody tr:first-child td:nth-child(2)"
-        );
-        return firstCell && firstCell.textContent.trim().length > 2;
-      },
-      { timeout: 60000 }
-    );
-  } catch (error) {
-    await page.screenshot({
-      path: `table-error-${Date.now()}.png`,
-      fullPage: true,
-    });
-    throw new Error(`Tablo yüklenemedi: ${error.message}`);
+// Yeni sıralama fonksiyonu
+const applySorting = async (page) => {
+  await page.waitForSelector('#example2 thead th[data-sortable="true"]', {
+    timeout: 30000,
+  });
+
+  // Daha spesifik sıralama butonu seçici
+  const sortHeader = await page.$x(
+    '//th[contains(., "Population") or contains(., "Nüfus")]/button[contains(@class, "datatable-sorter")]'
+  );
+
+  if (!sortHeader.length) {
+    throw new Error("Population sıralama başlığı bulunamadı");
+  }
+
+  // Sıralama durum kontrolü
+  const isAlreadySorted = await page.evaluate((header) => {
+    return header.parentElement.classList.contains("datatable-descending");
+  }, sortHeader[0]);
+
+  if (!isAlreadySorted) {
+    await sortHeader[0].click();
+    await page.waitForNetworkIdle({ idleTime: 1000 });
   }
 };
 
 export const fetchCountryDataDynamic = async () => {
   let browser;
-  const maxRetries = 3;
-  let attempt = 0;
-  while (attempt < maxRetries) {
-    try {
-      browser = await puppeteer.launch(browserConfig);
-      const page = await browser.newPage();
+  try {
+    browser = await puppeteer.launch({
+      headless: "new",
+      args: ["--no-sandbox", "--disable-setuid-sandbox"],
+    });
+    const page = await browser.newPage();
 
-      await page.setExtraHTTPHeaders({
-        "Accept-Language": "en-US,en;q=0.9",
-        Referer: config.COUNTRY_URL,
-      });
-      await page.setUserAgent(
-        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
-      );
+    // Gerçekçi User-Agent ve geniş viewport ayarı
+    await page.setUserAgent(
+      "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36"
+    );
+    await page.setViewport({ width: 1920, height: 1080 });
+    await page.setDefaultNavigationTimeout(45000);
 
-      // Sayfanın tamamen yüklenmesini sağlamak için networkidle0 kullan
-      await page.goto(config.COUNTRY_URL, {
-        waitUntil: "networkidle0",
-        timeout: 120000,
-      });
+    console.log(`Navigating to country URL: ${config.COUNTRY_URL}`);
+    await page.goto(config.COUNTRY_URL, {
+      waitUntil: "networkidle2",
+      timeout: 60000,
+    });
 
-      // DOM'un stabil hale gelmesi için kısa bekleme
-      await page.waitForTimeout(2000);
+    // Sayfa içeriğinin tamamen yüklenip, tablo satır sayısının 1'den fazla olmasını bekleyelim.
+    await page.waitForFunction(
+      () => document.querySelectorAll("#example2 tbody tr").length > 0,
+      { timeout: 45000 }
+    );
 
-      // Sayfanın tamamını yüklemek için scroll yap
-      let lastHeight = 0;
-      for (let i = 0; i < 5; i++) {
-        const newHeight = await page.evaluate(async () => {
-          window.scrollTo(0, document.body.scrollHeight);
-          await new Promise((resolve) => setTimeout(resolve, 2000));
-          return document.body.scrollHeight;
-        });
-        if (newHeight === lastHeight) break;
-        lastHeight = newHeight;
-      }
+    // Debug: Sayfa içeriğini inceleyip doğru elemanın yüklenip yüklenmediğini kontrol edebilirsiniz.
+    // const pageContent = await page.content();
+    // console.log(pageContent);
 
-      await waitForTable(page);
-
-      // Tablonun HTML'sini al
-      const tableHTML = await page.evaluate(() => {
-        const tbody = document.querySelector("#example2 tbody");
-        return tbody ? tbody.innerHTML : "";
-      });
-      const $ = cheerio.load(tableHTML);
-      const rows = $("#example2 tbody tr");
-      const countryData = [];
-      rows.each((i, row) => {
-        const cells = $(row).find("td");
-        if (cells.length < 10) return;
-        const rawCountry = $(cells[1]).text().trim();
-        const population =
-          Number(
-            $(cells[2])
-              .text()
-              .replace(/[^\d.-]/g, "")
-          ) || 0;
-        if (population < 1000) return;
-        countryData.push({
-          country: COUNTRY_MAPPING[rawCountry] || rawCountry,
-          current_population: population,
-          yearly_change:
-            Number(
-              $(cells[3])
-                .text()
-                .replace(/[^\d.-]/g, "")
-            ) || 0,
-          net_change:
-            Number(
-              $(cells[4])
-                .text()
-                .replace(/[^\d.-]/g, "")
-            ) || 0,
-          migrants:
-            Number(
-              $(cells[7])
-                .text()
-                .replace(/[^\d.-]/g, "")
-            ) || 0,
-          med_age:
-            Number(
-              $(cells[9])
-                .text()
-                .replace(/[^\d.-]/g, "")
-            ) || 0,
-        });
-      });
-
-      // Ek validasyon: Kayıtların belirli kriterleri sağlaması
-      const validData = countryData.filter(
-        (item) =>
-          item.current_population > 1000 &&
-          item.med_age > 10 &&
-          Math.abs(item.yearly_change) < 100
-      );
-
-      if (validData.length < 50) {
-        throw new Error(`Yetersiz veri: ${validData.length} geçerli kayıt`);
-      }
-      return validData;
-    } catch (error) {
-      console.error("Gelişmiş hata logu:", {
-        message: error.message,
-        url: config.COUNTRY_URL,
-        stack: error.stack,
-      });
-      attempt++;
-      if (attempt < maxRetries) {
-        console.warn(`Deneme ${attempt} başarısız oldu, yeniden deneniyor...`);
-      } else {
-        console.error("Max deneme sayısına ulaşıldı, boş veri döndürülüyor.");
-        return [];
-      }
-    } finally {
-      if (browser) await browser.close();
+    // XPath ile sort butonunu bulup tıklama işlemleri
+    const sortButtons = await page.$x(
+      '//th[contains(@aria-label, "activate to sort column descending")]'
+    );
+    if (!sortButtons.length) {
+      throw new Error("Sort button not found");
     }
+    const sortButton = sortButtons[0];
+
+    console.log("Applying population sorting...");
+    await sortButton.click(); // İlk tıklama (asc)
+    await page.waitForTimeout(2000);
+    await sortButton.click(); // İkinci tıklama (desc)
+
+    // Sıralamadan sonra tablo satır sayısının güncellendiğini bekleyelim.
+    await page.waitForFunction(
+      () => document.querySelectorAll("#example2 tbody tr").length > 0,
+      { timeout: 45000 }
+    );
+
+    // Daha sağlam veri çekme yöntemi
+    const countryData = await page.evaluate((mapping) => {
+      return Array.from(document.querySelectorAll("#example2 tbody tr")).map(
+        (row) => {
+          const cells = row.querySelectorAll("td");
+          const getData = (index, type = "text") => {
+            const cell = cells[index];
+            return type === "number"
+              ? parseFloat(
+                  cell.dataset.order || cell.innerText.replace(/[^\d.-]/g, "")
+                )
+              : cell.textContent.trim();
+          };
+
+          return {
+            country: mapping[getData(1)] || getData(1),
+            raw_values: {
+              population: getData(2, "number"),
+              yearly_change: getData(3, "number"),
+              net_change: getData(4, "number"),
+              migrants: getData(7, "number"),
+              med_age: getData(9, "number"),
+            },
+          };
+        }
+      );
+    }, COUNTRY_NAME_MAPPING);
+
+    // Veri parsing işlemleri
+    const parsedData = countryData
+      .map((item) => {
+        const parsed = {
+          country: item.country,
+          current_population: parseNumber(item.raw_values.population),
+          yearly_change: parsePercentage(item.raw_values.yearly_change),
+          net_change: parseNumber(item.raw_values.net_change),
+          migrants: parseNumber(item.raw_values.migrants),
+          med_age: parseNumber(item.raw_values.med_age),
+          "@timestamp": new Date().toISOString(),
+          type: "country",
+          is_current: true,
+        };
+
+        if (Object.values(parsed).some((v) => v === null)) {
+          console.warn(`Invalid data for ${item.country}`);
+          return null;
+        }
+
+        return parsed;
+      })
+      .filter(Boolean);
+
+    console.log(`Successfully parsed ${parsedData.length} countries`);
+    return parsedData;
+  } catch (error) {
+    console.error("Country scraping error:", error.message);
+    return null;
+  } finally {
+    if (browser) await browser.close();
   }
 };
