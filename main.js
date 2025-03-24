@@ -33,7 +33,7 @@ const validateData = (worldData, countryData) => {
   const EXPECTED_COUNTRIES = 235;
 
   // Dünya verisi kontrolleri
-  const worldPopulationThreshold = 7_900_000_000; // Güncel dünya nüfus eşiği
+  const worldPopulationThreshold = 7_900_000_000;
   if (
     !worldData?.current_population ||
     worldData.current_population < worldPopulationThreshold
@@ -52,7 +52,6 @@ const validateData = (worldData, countryData) => {
     const missingCount = EXPECTED_COUNTRIES - countryData.length;
     if (missingCount > 0) errors.push(`Eksik ülke: ${missingCount}`);
 
-    // Kritik ülke kontrolleri
     const criticalCountries = ["China", "India", "United States"];
     const missingCritical = criticalCountries.filter(
       (c) => !countryData.some((d) => d.country === c)
@@ -60,7 +59,6 @@ const validateData = (worldData, countryData) => {
     if (missingCritical.length)
       errors.push(`Eksik kritik ülkeler: ${missingCritical.join(", ")}`);
 
-    // Veri kalite kontrolü
     const invalidEntries = countryData.filter(
       (c) =>
         c.current_population <= 0 || isNaN(c.yearly_change) || isNaN(c.med_age)
@@ -80,7 +78,7 @@ const processData = async () => {
     // Elasticsearch hazırlığı
     await initIndex();
 
-    // 1. Adım: Dünya verilerini önce çek
+    // 1. Adım: Dünya verilerini çek
     logger.info("════════════ DÜNYA VERİLERİ ÇEKİLİYOR ════════════");
     const worldBar = new ProgressBar("🌍 Dünya verisi [:bar] :percent :etas", {
       complete: "=",
@@ -107,9 +105,13 @@ const processData = async () => {
       ),
     ]);
 
-    clearInterval(worldTimer); // Animasyonu durdur
+    clearInterval(worldTimer);
 
-    // 2. Adım: Ülke verilerini dünya verisinden sonra çek
+    // 2. Adım: Dünya verileri geldikten sonra 20 saniye bekle (animasyon süresi gibi kullanılabilir)
+    logger.info("Dünya verisi alındıktan sonra 20 saniye bekleniyor...");
+    await new Promise((resolve) => setTimeout(resolve, 20000));
+
+    // 3. Adım: Ülke verilerini çek
     logger.info("\n════════════ ÜLKE VERİLERİ ÇEKİLİYOR ════════════");
     const countryBar = new ProgressBar("🇹🇷 Ülke verisi [:bar] :percent :etas", {
       complete: "=",
@@ -136,9 +138,9 @@ const processData = async () => {
       ),
     ]);
 
-    clearInterval(countryTimer); // Animasyonu durdur
+    clearInterval(countryTimer);
 
-    // Hata yönetimi
+    // Sonuçların loglanması
     const results = {
       world: worldData,
       country: countryData,
@@ -219,7 +221,6 @@ const processData = async () => {
       body: bulkBody,
     });
 
-    // Hata analizi
     if (response.errors) {
       logger.warn(
         `Hatalı dokümanlar: ${
