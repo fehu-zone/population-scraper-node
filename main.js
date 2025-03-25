@@ -207,7 +207,6 @@ const handleValidation = ({ isValid, errors, warnings }) => {
   }
 };
 
-// main.js içinde sendToElastic fonksiyonu güncellemesi
 const sendToElastic = async ({ world, country }) => {
   const body = [];
 
@@ -284,12 +283,14 @@ const sendToElastic = async ({ world, country }) => {
       });
     }
 
-    return { successCount, errorCount };
+    return {
+      successCount: successCount,
+      errorCount: errorCount,
+    };
   } catch (error) {
-    // Gelişmiş hata yakalama
     logger.error("Elasticsearch hatası:");
     if (error.meta) {
-      logger.error(`Meta bilgisi: ${JSON.stringify(error.meta.body)}`);
+      logger.error(`Hata detayı: ${JSON.stringify(error.meta.body.error)}`);
     } else {
       logger.error(error.stack);
     }
@@ -302,9 +303,11 @@ const calculateAverageAge = (countries) => {
     .map((c) => c.med_age)
     .filter((age) => age > 0 && age < 100);
 
-  return (
-    validAges.reduce((sum, age) => sum + age, 0) / validAges.length
-  ).toFixed(1);
+  return validAges.length > 0
+    ? (validAges.reduce((sum, age) => sum + age, 0) / validAges.length).toFixed(
+        1
+      )
+    : "N/A";
 };
 
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
