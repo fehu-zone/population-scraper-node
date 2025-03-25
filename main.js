@@ -4,6 +4,7 @@ import { fetchCountryDataDynamic } from "./scraper/countryDataDynamic.js";
 import { fetchWorldDataDynamic } from "./scraper/worldDataDynamic.js";
 import { initIndex, client } from "./elastic/client.js";
 import ProgressBar from "progress";
+import { updateCurrentSnapshot } from "./elastic/client.js";
 
 dotenv.config();
 
@@ -27,47 +28,58 @@ const logger = {
     ),
 };
 
-// Veri Doğrulama
+// Geliştirilmiş Veri Doğrulama
 const validateData = (worldData, countryData) => {
+  const warnings = [];
   const errors = [];
   const EXPECTED_COUNTRIES = 235;
 
   // Dünya verisi kontrolleri
-  const worldPopulationThreshold = 7_900_000_000;
-  if (
-    !worldData?.current_population ||
-    worldData.current_population < worldPopulationThreshold
-  ) {
-    errors.push(
-      `Geçersiz dünya nüfusu: ${
-        worldData?.current_population?.toLocaleString() || "bilinmiyor"
-      }`
-    );
+  if (!worldData?.current_population) {
+    errors.push("Dünya nüfus verisi eksik");
   }
 
   // Ülke verisi kontrolleri
-  if (!countryData || !countryData.length) {
+  if (!countryData || countryData.length === 0) {
     errors.push("Hiç ülke verisi alınamadı");
-  } else {
-    const missingCount = EXPECTED_COUNTRIES - countryData.length;
-    if (missingCount > 0) errors.push(`Eksik ülke: ${missingCount}`);
-
-    const criticalCountries = ["China", "India", "United States"];
-    const missingCritical = criticalCountries.filter(
-      (c) => !countryData.some((d) => d.country === c)
-    );
-    if (missingCritical.length)
-      errors.push(`Eksik kritik ülkeler: ${missingCritical.join(", ")}`);
-
-    const invalidEntries = countryData.filter(
-      (c) =>
-        c.current_population <= 0 || isNaN(c.yearly_change) || isNaN(c.med_age)
-    ).length;
-    if (invalidEntries > 5)
-      errors.push(`${invalidEntries} geçersiz veri içeren ülke`);
+    return { isValid: false, errors, warnings };
   }
 
-  return { isValid: !errors.length, errors };
+  const totalCountries = countryData.length;
+  const validCountries = countryData.filter(
+    (c) =>
+      c.current_population > 0 && !isNaN(c.yearly_change) && !isNaN(c.med_age)
+  ).length;
+
+  // Uyarılar
+  if (totalCountries < EXPECTED_COUNTRIES) {
+    warnings.push(`Eksik ülke: ${EXPECTED_COUNTRIES - totalCountries}`);
+  }
+
+  const criticalMissing = ["China", "India", "United States"].filter(
+    (c) => !countryData.some((d) => d.country === c)
+  );
+
+  if (criticalMissing.length > 0) {
+    warnings.push(`Eksik kritik ülkeler: ${criticalMissing.join(", ")}`);
+  }
+
+  if (totalCountries - validCountries > 0) {
+    warnings.push(
+      `Geçersiz veri içeren ülkeler: ${totalCountries - validCountries}`
+    );
+  }
+
+  // Hatalar
+  if (validCountries === 0) {
+    errors.push("Hiç geçerli ülke verisi yok");
+  }
+
+  return {
+    isValid: errors.length === 0,
+    errors,
+    warnings,
+  };
 };
 
 // Ana İşlem Akışı
@@ -78,177 +90,226 @@ const processData = async () => {
     // Elasticsearch hazırlığı
     await initIndex();
 
-    // Önceki verileri temizle
-    await client.deleteByQuery({
-      index: process.env.INDEX_NAME,
-      body: { query: { match: { is_current: true } } },
-    });
-
-    // 1. Adım: Dünya verilerini çek
+    // 1. Dünya verilerini çek
     logger.info("════════════ DÜNYA VERİLERİ ÇEKİLİYOR ════════════");
-    const worldBar = new ProgressBar("🌍 Dünya verisi [:bar] :percent :etas", {
-      complete: "=",
-      incomplete: " ",
-      width: 30,
-      total: 15,
-    });
-
-    const worldTimer = setInterval(() => {
-      worldBar.tick();
-      if (worldBar.complete) {
-        clearInterval(worldTimer);
-        logger.success("Dünya verisi alındı!");
-      }
-    }, 1000);
-
-    const worldData = await Promise.race([
-      fetchWorldDataDynamic(),
-      new Promise((_, reject) =>
-        setTimeout(
-          () => reject(new Error("Dünya verisi çekme zaman aşımına uğradı")),
-          120000
-        )
-      ),
-    ]);
-
-    clearInterval(worldTimer);
-
-    // 2. Adım: Dünya verisi geldikten sonra 20 saniye bekle
-    logger.info("Dünya verisi alındıktan sonra 20 saniye bekleniyor...");
-    await new Promise((resolve) => setTimeout(resolve, 20000));
-
-    // 3. Adım: Ülke verilerini çek (dinamik sayfadan)
-    logger.info(
-      "\n════════════ ÜLKE VERİLERİ (DİNAMİK) ÇEKİLİYOR ════════════"
+    const worldData = await fetchWithProgress(
+      fetchWorldDataDynamic,
+      "🌍 Dünya verisi",
+      15,
+      120000
     );
-    const countryBar = new ProgressBar("🌐 Ülke verisi [:bar] :percent :etas", {
-      complete: "=",
-      incomplete: " ",
-      width: 30,
-      total: 30,
-    });
 
-    const countryTimer = setInterval(() => {
-      countryBar.tick();
-      if (countryBar.complete) {
-        clearInterval(countryTimer);
-        logger.success("Ülke verisi alımı tamamlandı!");
-      }
-    }, 1000);
+    // 2. Bekleme süresi
+    logger.info("Dünya verisi alındıktan sonra 20 saniye bekleniyor...");
+    await delay(20000);
 
-    const countryData = await Promise.race([
-      fetchCountryDataDynamic(),
+    // 3. Ülke verilerini çek
+    logger.info("════════════ ÜLKE VERİLERİ ÇEKİLİYOR ════════════");
+    const countryData = await fetchWithProgress(
+      fetchCountryDataDynamic,
+      "🌐 Ülke verisi",
+      30,
+      240000
+    );
+
+    // Sonuçları işle
+    const results = { world: worldData, country: countryData };
+    logResults(results);
+
+    // Validasyon
+    const validation = validateData(results.world, results.country);
+    handleValidation(validation);
+
+    // Elasticsearch'e gönder
+    const { successCount, errorCount } = await sendToElastic(results);
+
+    logger.success(`Başarıyla kaydedildi: ${successCount} kayıt`);
+    if (errorCount > 0) {
+      logger.warn(`Başarısız kayıtlar: ${errorCount}`);
+    }
+
+    // Snapshot güncelleme
+    await updateCurrentSnapshot(new Date().toISOString());
+  } catch (error) {
+    logger.error(`Kritik Hata: ${error.message}`);
+    logger.info("5 dakika sonra yeniden denenecek...");
+    setTimeout(processData, 300000);
+  }
+};
+
+// Yardımcı Fonksiyonlar
+const fetchWithProgress = async (fetchFn, label, total, timeout) => {
+  const bar = new ProgressBar(`${label} [:bar] :percent :etas`, {
+    complete: "=",
+    incomplete: " ",
+    width: 30,
+    total,
+  });
+
+  const timer = setInterval(() => bar.tick(), 1000);
+
+  try {
+    const result = await Promise.race([
+      fetchFn(),
       new Promise((_, reject) =>
-        setTimeout(
-          () => reject(new Error("Ülke verisi çekme zaman aşımına uğradı")),
-          240000
-        )
+        setTimeout(() => reject(new Error(`${label} zaman aşımı`)), timeout)
       ),
     ]);
 
-    clearInterval(countryTimer);
+    clearInterval(timer);
+    bar.update(1);
+    return result;
+  } catch (error) {
+    clearInterval(timer);
+    throw error;
+  }
+};
 
-    // Sonuçların loglanması
-    const results = {
-      world: worldData,
-      country: countryData,
-    };
+const logResults = (results) => {
+  logger.info("════════════ DÜNYA VERİLERİ ════════════");
+  if (results.world) {
+    logger.info(
+      `🌍 Nüfus: ${results.world.current_population?.toLocaleString()}`
+    );
+    logger.info(
+      `📈 Günlük Büyüme: ${results.world.population_growth?.toLocaleString()}`
+    );
+    logger.info(`⏳ Zaman Damgası: ${results.world["@timestamp"]}`);
+  } else {
+    logger.error("Dünya verisi yok");
+  }
 
-    // Dünya verilerini loglama
-    logger.info("════════════ DÜNYA VERİLERİ ════════════");
-    if (results.world) {
-      logger.info(
-        `🌍 Toplam Nüfus: ${results.world.current_population?.toLocaleString()}`
-      );
-      logger.info(
-        `👶 Bugünkü Doğum: ${results.world.births_today?.toLocaleString()}`
-      );
-      logger.info(
-        `☠️ Bugünkü Ölüm: ${results.world.deaths_today?.toLocaleString()}`
-      );
-      logger.info(
-        `📈 Net Büyüme: ${results.world.population_growth?.toLocaleString()}`
-      );
-      logger.info(
-        `📅 Yıllık Doğum: ${(
-          results.world.births_today * 365
-        ).toLocaleString()}`
-      );
-      logger.info(`⏳ Zaman Damgası: ${results.world["@timestamp"]}`);
-    } else {
-      logger.error("Dünya verisi alınamadı!");
-    }
-    logger.info("════════════════════════════════════════");
+  logger.info("════════════ ÜLKE VERİLERİ ════════════");
+  if (results.country?.length > 0) {
+    logger.info(`✅ Toplam Ülke: ${results.country.length}`);
+    logger.info(
+      `🏆 İlk 3 Ülke: ${results.country
+        .slice(0, 3)
+        .map((c) => c.country)
+        .join(", ")}`
+    );
+    logger.info(`📊 Ortalama Yaş: ${calculateAverageAge(results.country)}`);
+  } else {
+    logger.error("Ülke verisi yok");
+  }
+};
 
-    // Ülke verilerini loglama
-    logger.info("════════════ ÜLKE VERİLERİ ════════════");
-    if (results.country && results.country.length > 0) {
-      logger.info(`✅ ${results.country.length} ülke verisi alındı`);
-      logger.info(
-        `🏆 İlk 3 Ülke: ${results.country
-          .slice(0, 3)
-          .map((c) => c.country)
-          .join(", ")}`
-      );
-      logger.info(
-        `📊 Ortalama Yaş: ${(
-          results.country.reduce((sum, c) => sum + (c.med_age || 0), 0) /
-          results.country.length
-        ).toFixed(1)}`
-      );
-    } else {
-      logger.error("⛔ Hiç ülke verisi alınamadı!");
-    }
+const handleValidation = ({ isValid, errors, warnings }) => {
+  if (!isValid) {
+    logger.error("Validasyon Hataları:");
+    errors.forEach((e) => logger.error(`❌ ${e}`));
+    throw new Error("Kritik validasyon hataları");
+  }
 
-    // Veri validasyonu
-    const validation = validateData(results.world, results.country);
-    if (!validation.isValid) {
-      throw new Error(`Validasyon Hatası:\n${validation.errors.join("\n")}`);
-    }
+  if (warnings.length > 0) {
+    logger.warn("Validasyon Uyarıları:");
+    warnings.forEach((w) => logger.warn(`⚠️  ${w}`));
+  }
+};
 
-    // Elasticsearch bulk insert
-    const bulkBody = results.country.flatMap((country) => [
-      { index: { _index: process.env.INDEX_NAME } },
-      {
-        ...country,
-        type: "country",
-        is_current: true,
-        "@timestamp": new Date().toISOString(),
-      },
-    ]);
+// main.js içinde sendToElastic fonksiyonu güncellemesi
+const sendToElastic = async ({ world, country }) => {
+  const body = [];
 
-    if (results.world) {
-      bulkBody.unshift(
+  try {
+    // Dünya verisini ekle
+    if (world) {
+      body.push(
         { index: { _index: process.env.INDEX_NAME } },
-        { ...results.world, type: "world", is_current: true }
+        {
+          ...world,
+          type: "world",
+          is_current: true,
+          "@timestamp": new Date().toISOString(),
+        }
       );
+    }
+
+    // Ülke verilerini ekle
+    if (country?.length > 0) {
+      country.forEach((c) => {
+        body.push(
+          { index: { _index: process.env.INDEX_NAME } },
+          {
+            ...c,
+            type: "country",
+            is_current: true,
+            "@timestamp": new Date().toISOString(),
+            current_population: c.current_population || 0,
+            yearly_change: c.yearly_change || 0,
+            net_change: c.net_change || 0,
+            migrants: c.migrants || 0,
+            med_age: c.med_age || 0,
+          }
+        );
+      });
+    }
+
+    // Body kontrolü
+    if (body.length === 0) {
+      logger.warn("Gönderilecek veri yok");
+      return { successCount: 0, errorCount: 0 };
     }
 
     const { body: response } = await client.bulk({
       refresh: "wait_for",
-      body: bulkBody,
+      body,
     });
 
-    if (response.errors) {
-      logger.warn(
-        `Hatalı dokümanlar: ${
-          response.items.filter((i) => i.index.error).length
-        }`
-      );
-      response.items.slice(0, 3).forEach(({ index }) => {
-        if (index.error) logger.error(`Hata: ${index.error.reason}`);
+    // Hata analizi
+    let successCount = 0;
+    let errorCount = 0;
+    const errors = [];
+
+    if (response?.items) {
+      response.items.forEach((item, index) => {
+        if (item.index.error) {
+          errorCount++;
+          errors.push({
+            document: body[index * 2 + 1],
+            reason: item.index.error.reason,
+          });
+        } else {
+          successCount++;
+        }
       });
     }
 
-    logger.success(`Başarıyla kaydedildi: ${response.items.length} kayıt`);
+    // Hata loglama
+    if (errorCount > 0) {
+      logger.error(`İlk 3 hata detayı:`);
+      errors.slice(0, 3).forEach((err, i) => {
+        logger.error(`${i + 1}. Hata: ${err.reason}`);
+        logger.error(`Belge: ${JSON.stringify(err.document)}`);
+      });
+    }
+
+    return { successCount, errorCount };
   } catch (error) {
-    logger.error(`Kritik Hata: ${error.message}`);
-    logger.info("5 dakika sonra yeniden denenecek...");
-    setTimeout(processData, 300_000);
+    // Gelişmiş hata yakalama
+    logger.error("Elasticsearch hatası:");
+    if (error.meta) {
+      logger.error(`Meta bilgisi: ${JSON.stringify(error.meta.body)}`);
+    } else {
+      logger.error(error.stack);
+    }
+    throw error;
   }
 };
 
-// Uygulama başlatma
+const calculateAverageAge = (countries) => {
+  const validAges = countries
+    .map((c) => c.med_age)
+    .filter((age) => age > 0 && age < 100);
+
+  return (
+    validAges.reduce((sum, age) => sum + age, 0) / validAges.length
+  ).toFixed(1);
+};
+
+const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+// Uygulama Başlatma
 console.clear();
 processData();
-setInterval(processData, 1_800_000);
+setInterval(processData, 1800000); // 30 dakikada bir

@@ -7,8 +7,14 @@ export default {
   ELASTIC_USERNAME: process.env.ELASTIC_USERNAME,
   ELASTIC_PASSWORD: process.env.ELASTIC_PASSWORD,
   REQUEST_HEADERS: {
-    "User-Agent": process.env.USER_AGENT,
+    "User-Agent":
+      process.env.USER_AGENT ||
+      "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
   },
-  COUNTRY_URL: process.env.COUNTRY_URL, // .env’de tanımlı
-  WORLD_URL: process.env.WORLD_URL, // .env’de tanımlı
+  COUNTRIES_URL:
+    process.env.COUNTRIES_URL ||
+    "https://www.worldometers.info/world-population/population-by-country/?t=" +
+      Date.now(),
+  WORLD_URL:
+    process.env.WORLD_URL || "https://www.worldometers.info/world-population/",
 };

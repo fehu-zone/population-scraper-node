@@ -1,7 +1,6 @@
 import { Client } from "@elastic/elasticsearch";
 import config from "../config/index.js";
 
-// client.js içinde
 const client = new Client({
   node: config.ELASTICSEARCH_HOST,
   auth: {
@@ -9,21 +8,18 @@ const client = new Client({
     password: config.ELASTIC_PASSWORD,
   },
   tls: {
-    rejectUnauthorized: false, // Sertifika doğrulamayı devre dışı bırak
+    rejectUnauthorized: false,
   },
 });
 
 export const initIndex = async () => {
   try {
-    // 1. Adım: İndex metadata'sını temizle
-    await client.indices.delete({
+    const indexExists = await client.indices.exists({
       index: config.INDEX_NAME,
-      ignore_unavailable: true,
     });
 
-    // 2. Adım: Yeniden oluştur
-    await client.indices.create(
-      {
+    if (!indexExists) {
+      await client.indices.create({
         index: config.INDEX_NAME,
         body: {
           mappings: {
@@ -31,9 +27,9 @@ export const initIndex = async () => {
             properties: {
               country: { type: "keyword" },
               current_population: { type: "long" },
-              yearly_change: { type: "scaled_float", scaling_factor: 100 },
+              yearly_change: { type: "float" }, // Değişiklik
               net_change: { type: "integer" },
-              migrants: { type: "integer" },
+              migrants: { type: "integer" }, // Negatif değerler için
               med_age: { type: "float" },
               population_growth: { type: "integer" },
               "@timestamp": { type: "date" },
@@ -42,45 +38,42 @@ export const initIndex = async () => {
             },
           },
         },
-      },
-      { ignore: [400, 404] }
-    ); // 400 (Bad Request) ve 404 (Not Found) hatalarını yoksay
-
-    console.log(`Index "${config.INDEX_NAME}" başarıyla resetlendi.`);
-    return { created: true };
-  } catch (error) {
-    if (error.meta?.body?.error?.type === "resource_already_exists_exception") {
-      console.log(`Index "${config.INDEX_NAME}" zaten aktif.`);
-      return { exists: true };
+      });
+      console.log(`Index "${config.INDEX_NAME}" oluşturuldu.`);
+    } else {
+      console.log(`Index "${config.INDEX_NAME}" zaten mevcut.`);
     }
-    console.error(
-      `Kritik hata: ${error.meta?.body?.error?.reason || error.message}`
-    );
+
+    return { created: !indexExists };
+  } catch (error) {
+    console.error("Index işlemleri sırasında hata:", error.message);
     throw error;
   }
 };
 
-export const markCurrentSnapshot = async (timestamp) => {
+export const updateCurrentSnapshot = async (timestamp) => {
   try {
+    // Eski current'ları false yap
     await client.updateByQuery({
       index: config.INDEX_NAME,
       conflicts: "proceed",
+      refresh: true,
       body: {
         script: {
           source: "ctx._source.is_current = false",
           lang: "painless",
         },
         query: {
-          bool: {
-            filter: [{ term: { is_current: true } }],
-          },
+          term: { is_current: true },
         },
       },
     });
 
+    // Yeni verileri current yap
     await client.updateByQuery({
       index: config.INDEX_NAME,
       conflicts: "proceed",
+      refresh: true,
       body: {
         script: {
           source: "ctx._source.is_current = true",
@@ -90,16 +83,17 @@ export const markCurrentSnapshot = async (timestamp) => {
           bool: {
             must: [
               { term: { "@timestamp": timestamp } },
-              { term: { type: "world" } },
+              { terms: { type: ["world", "country"] } },
             ],
           },
         },
       },
     });
 
-    console.log(`Snapshot güncellendi: ${timestamp}`);
+    console.log(`Güncel snapshot güncellendi: ${timestamp}`);
   } catch (error) {
     console.error("Snapshot güncelleme hatası:", error.message);
+    throw error;
   }
 };
 

@@ -1,149 +1,98 @@
-import puppeteer from "puppeteer";
+import puppeteer from "puppeteer-extra";
+import StealthPlugin from "puppeteer-extra-plugin-stealth";
+import { parseNumber, cleanCountryName } from "./utils.js";
 import config from "../config/index.js";
-import { parseNumber, parsePercentage } from "./utils.js";
 
-const COUNTRY_NAME_MAPPING = {
-  "United States": "USA",
-  Congo: "DR Congo",
-  "Iran (Islamic Republic of)": "Iran",
-  "Viet Nam": "Vietnam",
-  Czechia: "Czech Republic",
-};
-
-// Yeni sıralama fonksiyonu
-const applySorting = async (page) => {
-  await page.waitForSelector('#example2 thead th[data-sortable="true"]', {
-    timeout: 30000,
-  });
-
-  // Daha spesifik sıralama butonu seçici
-  const sortHeader = await page.$x(
-    '//th[contains(., "Population") or contains(., "Nüfus")]/button[contains(@class, "datatable-sorter")]'
-  );
-
-  if (!sortHeader.length) {
-    throw new Error("Population sıralama başlığı bulunamadı");
-  }
-
-  // Sıralama durum kontrolü
-  const isAlreadySorted = await page.evaluate((header) => {
-    return header.parentElement.classList.contains("datatable-descending");
-  }, sortHeader[0]);
-
-  if (!isAlreadySorted) {
-    await sortHeader[0].click();
-    await page.waitForNetworkIdle({ idleTime: 1000 });
-  }
-};
+puppeteer.use(StealthPlugin());
 
 export const fetchCountryDataDynamic = async () => {
   let browser;
+  let page;
+
   try {
+    // Tarayıcı başlatma
     browser = await puppeteer.launch({
       headless: "new",
-      args: ["--no-sandbox", "--disable-setuid-sandbox"],
+      args: [
+        "--no-sandbox",
+        "--disable-setuid-sandbox",
+        "--disable-dev-shm-usage",
+        "--disable-features=site-per-process",
+        "--lang=en-US",
+        "--window-size=1920,3000",
+      ],
     });
-    const page = await browser.newPage();
 
-    // Gerçekçi User-Agent ve geniş viewport ayarı
+    page = await browser.newPage();
+    await page.setViewport({ width: 1920, height: 3000 });
+
+    // Gelişmiş tarayıcı ayarları
     await page.setUserAgent(
-      "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36"
+      "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.6045.159 Safari/537.36"
     );
-    await page.setViewport({ width: 1920, height: 1080 });
-    await page.setDefaultNavigationTimeout(45000);
+    await page.setJavaScriptEnabled(true);
+    await page.setDefaultNavigationTimeout(120000);
 
-    console.log(`Navigating to country URL: ${config.COUNTRY_URL}`);
-    await page.goto(config.COUNTRY_URL, {
+    // Sayfa yükleme
+    console.log("Sayfa yükleniyor:", config.COUNTRIES_URL);
+    await page.goto(config.COUNTRIES_URL, {
       waitUntil: "networkidle2",
-      timeout: 60000,
+      timeout: 120000,
     });
 
-    // Sayfa içeriğinin tamamen yüklenip, tablo satır sayısının 1'den fazla olmasını bekleyelim.
+    // Yeni tablo yükleme mekanizması
     await page.waitForFunction(
-      () => document.querySelectorAll("#example2 tbody tr").length > 0,
+      () => {
+        const potentialTables = Array.from(document.querySelectorAll("table"));
+        return potentialTables.some((table) => {
+          const headers = Array.from(table.querySelectorAll("th"));
+          return headers.some((th) => th.textContent.includes("Population"));
+        });
+      },
       { timeout: 45000 }
     );
 
-    // Debug: Sayfa içeriğini inceleyip doğru elemanın yüklenip yüklenmediğini kontrol edebilirsiniz.
-    // const pageContent = await page.content();
-    // console.log(pageContent);
-
-    // XPath ile sort butonunu bulup tıklama işlemleri
-    const sortButtons = await page.$x(
-      '//th[contains(@aria-label, "activate to sort column descending")]'
-    );
-    if (!sortButtons.length) {
-      throw new Error("Sort button not found");
-    }
-    const sortButton = sortButtons[0];
-
-    console.log("Applying population sorting...");
-    await sortButton.click(); // İlk tıklama (asc)
-    await page.waitForTimeout(2000);
-    await sortButton.click(); // İkinci tıklama (desc)
-
-    // Sıralamadan sonra tablo satır sayısının güncellendiğini bekleyelim.
-    await page.waitForFunction(
-      () => document.querySelectorAll("#example2 tbody tr").length > 0,
-      { timeout: 45000 }
-    );
-
-    // Daha sağlam veri çekme yöntemi
-    const countryData = await page.evaluate((mapping) => {
-      return Array.from(document.querySelectorAll("#example2 tbody tr")).map(
-        (row) => {
-          const cells = row.querySelectorAll("td");
-          const getData = (index, type = "text") => {
-            const cell = cells[index];
-            return type === "number"
-              ? parseFloat(
-                  cell.dataset.order || cell.innerText.replace(/[^\d.-]/g, "")
-                )
-              : cell.textContent.trim();
-          };
-
-          return {
-            country: mapping[getData(1)] || getData(1),
-            raw_values: {
-              population: getData(2, "number"),
-              yearly_change: getData(3, "number"),
-              net_change: getData(4, "number"),
-              migrants: getData(7, "number"),
-              med_age: getData(9, "number"),
-            },
-          };
-        }
+    // Alternatif veri çekme yöntemi
+    const tableData = await page.evaluate(() => {
+      const tables = Array.from(document.querySelectorAll("table"));
+      const targetTable = tables.find(
+        (table) =>
+          table.textContent.includes("Country") &&
+          table.textContent.includes("Population")
       );
-    }, COUNTRY_NAME_MAPPING);
 
-    // Veri parsing işlemleri
-    const parsedData = countryData
-      .map((item) => {
-        const parsed = {
-          country: item.country,
-          current_population: parseNumber(item.raw_values.population),
-          yearly_change: parsePercentage(item.raw_values.yearly_change),
-          net_change: parseNumber(item.raw_values.net_change),
-          migrants: parseNumber(item.raw_values.migrants),
-          med_age: parseNumber(item.raw_values.med_age),
-          "@timestamp": new Date().toISOString(),
-          type: "country",
-          is_current: true,
-        };
+      return Array.from(targetTable.querySelectorAll("tbody tr")).map((row) => {
+        const cells = Array.from(row.querySelectorAll("td"));
+        return cells.map((cell) =>
+          cell.textContent
+            .replace(/\u00a0/g, " ") // Özel boşlukları temizle
+            .trim()
+        );
+      });
+    });
 
-        if (Object.values(parsed).some((v) => v === null)) {
-          console.warn(`Invalid data for ${item.country}`);
-          return null;
-        }
+    // Veri işleme
+    const processedData = tableData
+      .map((row) => ({
+        rank: parseNumber(row[0]),
+        country: cleanCountryName(row[1]),
+        current_population: parseNumber(row[2]),
+        yearly_change: parseNumber(row[3], true),
+        net_change: parseNumber(row[4]),
+        migrants: parseNumber(row[7]),
+        med_age: parseNumber(row[9]),
+      }))
+      .filter((item) => item.rank > 0);
 
-        return parsed;
-      })
-      .filter(Boolean);
-
-    console.log(`Successfully parsed ${parsedData.length} countries`);
-    return parsedData;
+    return processedData;
   } catch (error) {
-    console.error("Country scraping error:", error.message);
+    console.error("Son hata:", error);
+    if (page) {
+      await page.screenshot({
+        path: `final-error-${Date.now()}.png`,
+        fullPage: true,
+      });
+    }
     return null;
   } finally {
     if (browser) await browser.close();
