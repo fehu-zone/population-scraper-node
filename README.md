@@ -64,29 +64,6 @@ node main.js
 
 ## Docker Configuration
 
-### `Dockerfile`
-```dockerfile
-FROM node:18-alpine
-
-# Security hardening
-RUN apk add --no-cache tini && \
-    addgroup -S appgroup && \
-    adduser -S appuser -G appgroup
-
-WORKDIR /app
-RUN chown -R appuser:appgroup /app
-
-COPY --chown=appuser:appgroup package*.json ./
-RUN npm install --production --omit=dev && \
-    npm cache clean --force
-
-COPY --chown=appuser:appgroup . .
-
-USER appuser
-ENTRYPOINT ["/sbin/tini", "--"]
-CMD ["node", "main.js"]
-```
-
 ### `docker-compose.yaml`
 ```dockerfile
 
@@ -208,12 +185,6 @@ CLUSTER_NAME=population-cluster
 ES_HEAP_SIZE=1g
 KIBANA_PORT=5601
 ```
-### `.env File`
-```dockerfile
-# Version
-STACK_VERSION=7.17.14
-```
-
 
 ### `Deployment Commands`
 ```dockerfile
