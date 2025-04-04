@@ -226,6 +226,57 @@ docker-compose up -d es01 kibana
 # View logs
 docker-compose logs -f
 ```
+## 📁 Project Structure
+
+Below is the folder and file structure for the `population-scraper-node` project. Each file and directory has been briefly explained to give insight into its purpose and functionality.
+
+```text
+population-scraper-node/
+├── main.js                       # Entry point — orchestrates data scraping and Elasticsearch indexing
+├── .env                          # Environment variables file
+├── table-error.png               # Error screenshot: table parsing issue
+├── timeout-error.png             # Error screenshot: timeout issue
+
+├── config/
+│   └── index.js                  # Configuration settings (URLs, headers, selectors, etc.)
+
+├── elastic/
+│   └── client.js                 # Elasticsearch client configuration
+
+├── scraper/
+│   ├── countryDataDynamic.js     # Scrapes country-specific population data dynamically
+│   ├── utils.js                  # Helper functions for scraping and transformation
+│   ├── worldData.js              # Static world population data scraper
+│   └── worldDataDynamic.js       # Dynamic world population data scraper
+
+```
+
+---
+
+## 🛠️ Technologies & Dependencies
+
+This project is built using a modern JavaScript stack focused on web scraping, data handling, and Elasticsearch integration. Here's a breakdown of the core dependencies and their purposes:
+
+| Package                                     | Purpose                                                                 |
+|---------------------------------------------|-------------------------------------------------------------------------|
+| **@elastic/elasticsearch** (`^7.17.14`)     | Official Elasticsearch client for Node.js                              |
+| **axios** (`^1.8.4`)                        | Promise-based HTTP client for making reliable API requests             |
+| **axios-retry** (`^4.5.0`)                  | Adds automatic retry functionality to axios requests                   |
+| **cheerio** (`^1.0.0`)                      | Lightweight jQuery-like HTML parser for static content scraping        |
+| **dotenv** (`^16.4.7`)                      | Loads environment variables from `.env` file into `process.env`        |
+| **lru-cache** (`^11.0.2`)                   | In-memory caching layer for performance optimization                   |
+| **progress** (`^2.0.3`)                     | Console-based progress bar during scraping or data processing          |
+| **puppeteer** (`^24.4.0`)                   | Headless browser for dynamic web scraping                              |
+| **puppeteer-extra** (`^3.3.6`)              | Plugin framework for Puppeteer                                         |
+| **puppeteer-extra-plugin-adblocker** (`^2.13.6`) | Blocks ads and trackers during scraping, improves speed and reliability |
+| **puppeteer-extra-plugin-stealth** (`^2.11.2`) | Prevents detection as a bot by evading anti-scraping techniques         |
+
+These tools collectively enable:
+
+- Efficient and stealthy web scraping from JavaScript-rendered websites like Worldometer  
+- Smooth and retry-safe HTTP communication  
+- Clean and structured data handling  
+- Seamless integration with Elasticsearch for real-time analytics  
 
 ---
 
