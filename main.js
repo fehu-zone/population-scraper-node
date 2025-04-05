@@ -82,6 +82,40 @@ const validateData = (worldData, countryData) => {
   };
 };
 
+// Enerji Tüketimi Ölçüm Fonksiyonu
+const measureEnergyConsumption = async (fn, label = "İşlem") => {
+  // Yüksek çözünürlüklü zaman ölçümü
+  const startTime = process.hrtime();
+  const startCpuUsage = process.cpuUsage();
+
+  try {
+    const result = await fn();
+
+    const elapsedTime = process.hrtime(startTime);
+    const elapsedCpu = process.cpuUsage(startCpuUsage);
+    // CPU kullanım süresi: user + system (mikrosaniye cinsinden)
+    const cpuSeconds = (elapsedCpu.user + elapsedCpu.system) / 1e6;
+    // Duvar saati süresi (saniye)
+    const wallSeconds = elapsedTime[0] + elapsedTime[1] / 1e9;
+    // Tahmini güç tüketimi hesaplaması:
+    // Örnek: CPU'nun ortalama gücü 50W kabul ediliyor.
+    const cpuWattage = 50;
+    const estimatedEnergyJoules = cpuSeconds * cpuWattage;
+
+    logger.info(`\n== ${label} Enerji Tüketim Raporu ==`);
+    logger.info(`Duvar saati süresi: ${wallSeconds.toFixed(3)} s`);
+    logger.info(`CPU kullanım süresi: ${cpuSeconds.toFixed(3)} s`);
+    logger.info(
+      `Tahmini enerji tüketimi: ${estimatedEnergyJoules.toFixed(
+        2
+      )} J (ortalama ${cpuWattage}W kabul edilerek)`
+    );
+    return result;
+  } catch (error) {
+    throw error;
+  }
+};
+
 // Ana İşlem Akışı
 const processData = async () => {
   try {
@@ -133,8 +167,13 @@ const processData = async () => {
   } catch (error) {
     logger.error(`Kritik Hata: ${error.message}`);
     logger.info("5 dakika sonra yeniden denenecek...");
-    setTimeout(processData, 300000);
+    setTimeout(() => processDataWithEnergy(), 300000);
   }
+};
+
+// Enerji ölçümü dahil ana işlem çağrısı
+const processDataWithEnergy = async () => {
+  await measureEnergyConsumption(processData, "processData");
 };
 
 // Yardımcı Fonksiyonlar
@@ -314,5 +353,5 @@ const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 // Uygulama Başlatma
 console.clear();
-processData();
-setInterval(processData, 1800000); // 30 dakikada bir
+processDataWithEnergy();
+setInterval(processDataWithEnergy, 1800000); // 30 dakikada bir

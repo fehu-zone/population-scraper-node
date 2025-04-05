@@ -25,13 +25,23 @@ export const initIndex = async () => {
           mappings: {
             dynamic: "strict",
             properties: {
-              country: { type: "keyword" },
+              country: {
+                type: "text",
+                fields: {
+                  keyword: {
+                    type: "keyword",
+                    ignore_above: 256,
+                  },
+                },
+              },
+              country_code: { type: "keyword" },
+              continent: { type: "keyword" },
               current_population: { type: "long" },
-              yearly_change: { type: "float" }, // Değişiklik
+              yearly_change: { type: "float" },
               net_change: { type: "integer" },
-              migrants: { type: "integer" }, // Negatif değerler için
+              migrants: { type: "integer" },
               med_age: { type: "float" },
-              population_growth: { type: "integer" },
+              population_growth: { type: "float" }, // DİKKAT: "growth" yazımı kontrol et!
               "@timestamp": { type: "date" },
               is_current: { type: "boolean" },
               type: { type: "keyword" },
