@@ -16,6 +16,45 @@ A scalable solution for scraping real-time population data from Worldometer, sto
 - **Error Resilience**: Automatic screenshot capture for debugging failed scrapes
 - **Cloud Ready**: Dockerized deployment on AWS EC2 instances
 
+```mermaid
+flowchart TD
+    subgraph AWS
+        A[Docker: Scraper and Website]
+    end
+
+    subgraph Scraper
+        B[Worldometers]
+        C[Scraper: Puppeteer]
+        D[Cheerio HTML Parser]
+        E[Axios HTTP Client]
+        F[dotenv]
+        G[Cache & Progress]
+    end
+
+    subgraph ElasticStack
+        H[Elasticsearch]
+        I[Kibana Dashboard]
+    end
+
+    %% Data Flow
+    B --> C
+    C --> D
+    D --> G
+    C --> E
+    G --> H
+    H --> I
+    I --> A
+
+    %% Internal Links
+    A --> C
+    A --> I
+
+    %% Library Connections
+    C --- F
+    C --- G
+    E --- F
+```
+
 ## 🚀 Installation
 ```bash
 # Clone repository
