@@ -4,6 +4,8 @@
 ![Kibana](https://img.shields.io/badge/Kibana-005571?style=for-the-badge&logo=kibana&logoColor=white)
 ![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)
 ![AWS](https://img.shields.io/badge/Amazon_AWS-232F3E?style=for-the-badge&logo=amazon-aws&logoColor=white)
+![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)
+![Vue.js](https://img.shields.io/badge/Vue.js-35495E?style=for-the-badge&logo=vue.js&logoColor=4FC08D)
 
 A scalable solution for scraping real-time population data from Worldometer, storing in Elasticsearch, and visualizing through Kibana. Deployed on AWS infrastructure using Docker containers.
 
@@ -14,6 +16,45 @@ A scalable solution for scraping real-time population data from Worldometer, sto
 - **Error Resilience**: Automatic screenshot capture for debugging failed scrapes
 - **Cloud Ready**: Dockerized deployment on AWS EC2 instances
 
+```mermaid
+flowchart TD
+    subgraph AWS
+        A[Docker: Scraper and Website]
+    end
+
+    subgraph Scraper
+        B[Worldometers]
+        C[Scraper: Puppeteer]
+        D[Cheerio HTML Parser]
+        E[Axios HTTP Client]
+        F[dotenv]
+        G[Cache & Progress]
+    end
+
+    subgraph ElasticStack
+        H[Elasticsearch]
+        I[Kibana Dashboard]
+    end
+
+    %% Data Flow
+    B --> C
+    C --> D
+    D --> G
+    C --> E
+    G --> H
+    H --> I
+    I --> A
+
+    %% Internal Links
+    A --> C
+    A --> I
+
+    %% Library Connections
+    C --- F
+    C --- G
+    E --- F
+```
+
 ## 🚀 Installation
 ```bash
 # Clone repository
@@ -22,9 +63,6 @@ cd population-scraper-node
 
 # Install dependencies
 npm install
-
-# Set up environment variables
-cp .env.example .env
 ```
 
 # ⚙️ Configuration
