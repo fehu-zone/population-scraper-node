@@ -1,26 +1,43 @@
+// C:\Users\Fehu\Desktop\population-scraper-node\elastic\client.js
+
+import dotenv from "dotenv";
+dotenv.config();
 import { Client } from "@elastic/elasticsearch";
 import config from "../config/index.js";
 
-const client = new Client({
-  node: config.ELASTICSEARCH_HOST,
-  auth: {
-    username: config.ELASTIC_USERNAME,
-    password: config.ELASTIC_PASSWORD,
-  },
-  tls: {
-    rejectUnauthorized: false,
-  },
-});
+// .env'den veya config'den ELASTICSEARCH_HOST bilgisini alıyoruz; tanımlı değilse varsayılan olarak yerel sunucu kullanılır.
+const elasticHost =
+  process.env.ELASTICSEARCH_HOST ||
+  config.ELASTICSEARCH_HOST ||
+  "http://localhost:9200/";
 
+// Elasticsearch istemcisi için yapılandırma nesnesi
+const clientConfig = {
+  node: elasticHost,
+};
+
+// Eğer kimlik doğrulama bilgileri varsa ekleyelim
+if (process.env.ELASTIC_USERNAME || config.ELASTIC_USERNAME) {
+  clientConfig.auth = {
+    username: process.env.ELASTIC_USERNAME || config.ELASTIC_USERNAME,
+    password: process.env.ELASTIC_PASSWORD || config.ELASTIC_PASSWORD,
+  };
+}
+
+// Geliştirme ortamı veya özel durumlarda TLS kontrolünü kapatmak için
+clientConfig.tls = { rejectUnauthorized: false };
+
+export const client = new Client(clientConfig);
+
+// Index oluşturma fonksiyonu
 export const initIndex = async () => {
   try {
-    const indexExists = await client.indices.exists({
-      index: config.INDEX_NAME,
-    });
-
-    if (!indexExists) {
+    // İndex adı .env'den veya config dosyasından alınır
+    const indexName = process.env.INDEX_NAME || config.INDEX_NAME;
+    const { body: exists } = await client.indices.exists({ index: indexName });
+    if (!exists) {
       await client.indices.create({
-        index: config.INDEX_NAME,
+        index: indexName,
         body: {
           mappings: {
             dynamic: "strict",
@@ -41,7 +58,7 @@ export const initIndex = async () => {
               net_change: { type: "integer" },
               migrants: { type: "integer" },
               med_age: { type: "float" },
-              population_growth: { type: "float" }, // DİKKAT: "growth" yazımı kontrol et!
+              population_growth: { type: "float" },
               "@timestamp": { type: "date" },
               is_current: { type: "boolean" },
               type: { type: "keyword" },
@@ -49,23 +66,25 @@ export const initIndex = async () => {
           },
         },
       });
-      console.log(`Index "${config.INDEX_NAME}" oluşturuldu.`);
+      console.log(`Index "${indexName}" oluşturuldu.`);
     } else {
-      console.log(`Index "${config.INDEX_NAME}" zaten mevcut.`);
+      console.log(`Index "${indexName}" zaten mevcut.`);
     }
-
-    return { created: !indexExists };
+    return { created: !exists };
   } catch (error) {
-    console.error("Index işlemleri sırasında hata:", error.message);
+    console.error("Index oluşturulamadı:", error.message);
     throw error;
   }
 };
 
+// Snapshot güncelleme işlemini gerçekleştiren fonksiyon
 export const updateCurrentSnapshot = async (timestamp) => {
   try {
-    // Eski current'ları false yap
+    const indexName = process.env.INDEX_NAME || config.INDEX_NAME;
+
+    // Önce tüm mevcut "is_current: true" kayıtlarını false yapıyoruz
     await client.updateByQuery({
-      index: config.INDEX_NAME,
+      index: indexName,
       conflicts: "proceed",
       refresh: true,
       body: {
@@ -79,9 +98,9 @@ export const updateCurrentSnapshot = async (timestamp) => {
       },
     });
 
-    // Yeni verileri current yap
+    // Belirtilen "@timestamp" ve "type" koşullarına uyan kayıtları true yapıyoruz
     await client.updateByQuery({
-      index: config.INDEX_NAME,
+      index: indexName,
       conflicts: "proceed",
       refresh: true,
       body: {
@@ -106,5 +125,3 @@ export const updateCurrentSnapshot = async (timestamp) => {
     throw error;
   }
 };
-
-export { client };

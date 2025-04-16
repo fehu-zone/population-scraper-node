@@ -1,12 +1,17 @@
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 import dotenv from "dotenv";
+dotenv.config();
+
+// .env dosyasından bilgileri alıyoruz.
+// Eğer ELASTICSEARCH_HOST tanımlı değilse, varsayılan olarak yerel sunucuyu kullan.
+const ELASTICSEARCH_HOST =
+  process.env.ELASTICSEARCH_HOST || "http://localhost:9200/";
+
 import { fetchCountryDataDynamic } from "./scraper/countryDataDynamic.js";
 import { fetchWorldDataDynamic } from "./scraper/worldDataDynamic.js";
 import { initIndex, client } from "./elastic/client.js";
 import ProgressBar from "progress";
 import { updateCurrentSnapshot } from "./elastic/client.js";
-
-dotenv.config();
 
 // Gelişmiş Loglama Sistemi
 const logger = {
@@ -84,7 +89,6 @@ const validateData = (worldData, countryData) => {
 
 // Enerji Tüketimi Ölçüm Fonksiyonu
 const measureEnergyConsumption = async (fn, label = "İşlem") => {
-  // Yüksek çözünürlüklü zaman ölçümü
   const startTime = process.hrtime();
   const startCpuUsage = process.cpuUsage();
 
@@ -93,12 +97,8 @@ const measureEnergyConsumption = async (fn, label = "İşlem") => {
 
     const elapsedTime = process.hrtime(startTime);
     const elapsedCpu = process.cpuUsage(startCpuUsage);
-    // CPU kullanım süresi: user + system (mikrosaniye cinsinden)
     const cpuSeconds = (elapsedCpu.user + elapsedCpu.system) / 1e6;
-    // Duvar saati süresi (saniye)
     const wallSeconds = elapsedTime[0] + elapsedTime[1] / 1e9;
-    // Tahmini güç tüketimi hesaplaması:
-    // Örnek: CPU'nun ortalama gücü 50W kabul ediliyor.
     const cpuWattage = 50;
     const estimatedEnergyJoules = cpuSeconds * cpuWattage;
 
@@ -283,7 +283,6 @@ const sendToElastic = async ({ world, country }) => {
       });
     }
 
-    // Body kontrolü
     if (body.length === 0) {
       logger.warn("Gönderilecek veri yok");
       return { successCount: 0, errorCount: 0 };
@@ -294,7 +293,6 @@ const sendToElastic = async ({ world, country }) => {
       body,
     });
 
-    // Hata analizi
     let successCount = 0;
     let errorCount = 0;
     const errors = [];
@@ -313,7 +311,6 @@ const sendToElastic = async ({ world, country }) => {
       });
     }
 
-    // Hata loglama
     if (errorCount > 0) {
       logger.error(`İlk 3 hata detayı:`);
       errors.slice(0, 3).forEach((err, i) => {
@@ -322,10 +319,7 @@ const sendToElastic = async ({ world, country }) => {
       });
     }
 
-    return {
-      successCount: successCount,
-      errorCount: errorCount,
-    };
+    return { successCount, errorCount };
   } catch (error) {
     logger.error("Elasticsearch hatası:");
     if (error.meta) {
@@ -351,7 +345,6 @@ const calculateAverageAge = (countries) => {
 
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
-// Uygulama Başlatma
 console.clear();
 processDataWithEnergy();
-setInterval(processDataWithEnergy, 1800000); // 30 dakikada bir
+setInterval(processDataWithEnergy, 1800000); // Her 30 dakikada bir çalıştır.
