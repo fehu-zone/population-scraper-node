@@ -24,7 +24,6 @@ export const fetchWorldDataDynamic = async () => {
       timeout: 30000,
     });
 
-    // Daha güvenilir veri çekme
     const result = await page.evaluate(() => {
       const getValue = (rel) => {
         const el = document.querySelector(`[rel='${rel}']`);
@@ -38,7 +37,8 @@ export const fetchWorldDataDynamic = async () => {
       return {
         current_population: getValue("current_population"),
         births_today: getValue("births_today"),
-        deaths_today: getValue("dth1s_today"),
+        // Anahtar adını, site ile uyumlu olacak şekilde "dth1s_today" olarak ayarlıyoruz.
+        dth1s_today: getValue("dth1s_today"),
         population_growth: getValue("absolute_growth"),
         "@timestamp": new Date().toISOString(),
       };
@@ -47,7 +47,7 @@ export const fetchWorldDataDynamic = async () => {
     return {
       current_population: parseNumber(result.current_population),
       births_today: parseNumber(result.births_today),
-      deaths_today: parseNumber(result.deaths_today),
+      dth1s_today: parseNumber(result.dth1s_today),
       population_growth: parseNumber(result.population_growth),
       "@timestamp": result["@timestamp"],
     };

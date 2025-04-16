@@ -1,22 +1,17 @@
-// C:\Users\Fehu\Desktop\population-scraper-node\elastic\client.js
-
 import dotenv from "dotenv";
 dotenv.config();
 import { Client } from "@elastic/elasticsearch";
 import config from "../config/index.js";
 
-// .env'den veya config'den ELASTICSEARCH_HOST bilgisini alıyoruz; tanımlı değilse varsayılan olarak yerel sunucu kullanılır.
 const elasticHost =
   process.env.ELASTICSEARCH_HOST ||
   config.ELASTICSEARCH_HOST ||
   "http://localhost:9200/";
 
-// Elasticsearch istemcisi için yapılandırma nesnesi
 const clientConfig = {
   node: elasticHost,
 };
 
-// Eğer kimlik doğrulama bilgileri varsa ekleyelim
 if (process.env.ELASTIC_USERNAME || config.ELASTIC_USERNAME) {
   clientConfig.auth = {
     username: process.env.ELASTIC_USERNAME || config.ELASTIC_USERNAME,
@@ -24,15 +19,12 @@ if (process.env.ELASTIC_USERNAME || config.ELASTIC_USERNAME) {
   };
 }
 
-// Geliştirme ortamı veya özel durumlarda TLS kontrolünü kapatmak için
 clientConfig.tls = { rejectUnauthorized: false };
 
 export const client = new Client(clientConfig);
 
-// Index oluşturma fonksiyonu
 export const initIndex = async () => {
   try {
-    // İndex adı .env'den veya config dosyasından alınır
     const indexName = process.env.INDEX_NAME || config.INDEX_NAME;
     const { body: exists } = await client.indices.exists({ index: indexName });
     if (!exists) {
@@ -59,6 +51,10 @@ export const initIndex = async () => {
               migrants: { type: "integer" },
               med_age: { type: "float" },
               population_growth: { type: "float" },
+              // Eklenen yeni alanlar:
+              births_today: { type: "long" },
+              dth1s_today: { type: "long" },
+              rank: { type: "integer" },
               "@timestamp": { type: "date" },
               is_current: { type: "boolean" },
               type: { type: "keyword" },
@@ -77,12 +73,10 @@ export const initIndex = async () => {
   }
 };
 
-// Snapshot güncelleme işlemini gerçekleştiren fonksiyon
 export const updateCurrentSnapshot = async (timestamp) => {
   try {
     const indexName = process.env.INDEX_NAME || config.INDEX_NAME;
 
-    // Önce tüm mevcut "is_current: true" kayıtlarını false yapıyoruz
     await client.updateByQuery({
       index: indexName,
       conflicts: "proceed",
@@ -98,7 +92,6 @@ export const updateCurrentSnapshot = async (timestamp) => {
       },
     });
 
-    // Belirtilen "@timestamp" ve "type" koşullarına uyan kayıtları true yapıyoruz
     await client.updateByQuery({
       index: indexName,
       conflicts: "proceed",

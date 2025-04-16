@@ -28,12 +28,12 @@ export const fetchWorldData = async () => {
     const result = {
       current_population: extractValue("current_population"),
       births_today: extractValue("births_today"),
-      deaths_today: extractValue("dth1s_today"),
+      // Günlük ölüm verisini "dth1s_today" anahtarıyla çekiyoruz.
+      dth1s_today: extractValue("dth1s_today"),
       population_growth: extractValue("absolute_growth"),
       "@timestamp": new Date().toISOString(),
     };
 
-    // Veri kalite kontrolü
     if (Object.values(result).some((v) => v === null || Number.isNaN(v))) {
       throw new Error("Eksik veya geçersiz dünya verileri");
     }
