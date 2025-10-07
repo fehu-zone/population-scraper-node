@@ -5,17 +5,18 @@
   "type": "module",
   "main": "main.js",
   "scripts": {
-    "start": "node main.js"
+    "start": "node main.js",
+    "dev": "node --watch main.js"
   },
   "dependencies": {
-    "@elastic/elasticsearch": "^7.17.14",
-    "axios": "^1.8.4",
+    "@elastic/elasticsearch": "^8.9.0",
+    "axios": "^1.12.2",
     "axios-retry": "^4.5.0",
-    "cheerio": "^1.0.0",
-    "dotenv": "^16.4.7",
+    "cheerio": "^1.1.2",
+    "dotenv": "^17.2.2",
     "lru-cache": "^11.0.2",
     "progress": "^2.0.3",
-    "puppeteer": "^24.4.0",
+    "puppeteer": "^24.22.3",
     "puppeteer-extra": "^3.3.6",
     "puppeteer-extra-plugin-adblocker": "^2.13.6",
     "puppeteer-extra-plugin-stealth": "^2.11.2"

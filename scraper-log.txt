@@ -1,0 +1,1021 @@
+[INFO] 2025-10-07T14:59:59.706Z - Uygulama başlatılıyor
+[INFO] 2025-10-07T14:59:59.707Z - 📁 Index hazırlanıyor: world_population_data
+[INFO] 2025-10-07T14:59:59.708Z - 🔌 Elasticsearch bağlantısı test ediliyor...
+[SUCCESS] 2025-10-07T14:59:59.727Z - ✅ Elasticsearch bağlantısı başarılı - Cluster: docker-cluster
+[INFO] 2025-10-07T14:59:59.732Z - 🆕 Yeni index oluşturuluyor...
+[SUCCESS] 2025-10-07T14:59:59.857Z - ✅ Index oluşturuldu: world_population_data
+[INFO] 2025-10-07T14:59:59.858Z - İlk veri çekme işlemi başlatılıyor
+[INFO] 2025-10-07T14:59:59.858Z - Veri çekme işlemi #499 başlatıldı
+[INFO] 2025-10-07T14:59:59.859Z - Dünya verileri çekiliyor
+[INFO] 2025-10-07T14:59:59.860Z - 🌐 Dünya verileri için tarayıcı başlatılıyor (Puppeteer)
+[INFO] 2025-10-07T15:00:00.174Z - 📄 Sayfa yükleniyor: https://www.worldometers.info/world-population/
+[INFO] 2025-10-07T15:00:03.621Z - ⏳ Dünya veri elementleri bekleniyor...
+[ERROR] 2025-10-07T15:00:03.637Z - 💥 Dünya veri çekme hatası: page.waitForTimeout is not a function
+[INFO] 2025-10-07T15:00:04.075Z - 📸 Debug screenshot kaydedildi: debug-world-1759849203638.png
+[WARN] 2025-10-07T15:00:04.082Z - ⚠️ Screenshot/HTML kaydedilemedi
+[INFO] 2025-10-07T15:00:04.176Z - 🔚 Tarayıcı kapatıldı
+[INFO] 2025-10-07T15:00:04.176Z - 10 saniye bekleniyor
+[INFO] 2025-10-07T15:00:14.183Z - Ülke verileri çekiliyor
+[INFO] 2025-10-07T15:00:14.184Z - 🌍 Ülke verileri için tarayıcı başlatılıyor
+[INFO] 2025-10-07T15:00:14.434Z - 📄 Sayfa yükleniyor: https://www.worldometers.info/world-population/population-by-country/
+[INFO] 2025-10-07T15:00:15.357Z - ⏳ Nüfus tablosu yüklenmesi bekleniyor...
+[ERROR] 2025-10-07T15:00:15.396Z - 💥 Ülke veri çekme hatası: page.waitForTimeout is not a function
+[INFO] 2025-10-07T15:00:15.825Z - 📸 Hata screenshot'ı kaydedildi
+[INFO] 2025-10-07T15:00:15.924Z - 🔚 Tarayıcı kapatıldı
+[INFO] 2025-10-07T15:00:15.925Z - Veriler Elasticsearch'e gönderiliyor
+[INFO] 2025-10-07T15:00:15.926Z - 📤 Elasticsearch'e veri gönderiliyor...
+[WARN] 2025-10-07T15:00:15.926Z - ⚠️ Gönderilecek veri yok
+[INFO] 2025-10-07T15:00:15.927Z - Snapshot güncelleniyor
+[INFO] 2025-10-07T15:00:15.927Z - 🔄 Snapshot güncelleniyor: 2025-10-07T15:00:15.927Z
+[SUCCESS] 2025-10-07T15:00:15.934Z - ✅ Snapshot güncellendi: 0 kayıt aktif
+[SUCCESS] 2025-10-07T15:00:15.934Z - Veri çekme işlemi #499 tamamlandı - Süre: 16.076s
+[INFO] 2025-10-07T15:00:15.935Z - Bir sonraki veri çekme işlemi 4 dakika sonra
+[SUCCESS] 2025-10-07T15:00:15.935Z - Uygulama başlatıldı - Her 4 dakikada bir veri çekilecek
+[INFO] 2025-10-07T15:01:34.413Z - Uygulama başlatılıyor
+[INFO] 2025-10-07T15:01:34.414Z - 📁 Index hazırlanıyor: world_population_data
+[INFO] 2025-10-07T15:01:34.414Z - 🔌 Elasticsearch bağlantısı test ediliyor...
+[SUCCESS] 2025-10-07T15:01:34.434Z - ✅ Elasticsearch bağlantısı başarılı - Cluster: docker-cluster
+[INFO] 2025-10-07T15:01:34.438Z - ℹ️ Index zaten mevcut: world_population_data
+[INFO] 2025-10-07T15:01:34.440Z - 🔍 Mevcut mapping kontrol edildi
+[INFO] 2025-10-07T15:01:34.440Z - İlk veri çekme işlemi başlatılıyor
+[INFO] 2025-10-07T15:01:34.441Z - Veri çekme işlemi #639 başlatıldı
+[INFO] 2025-10-07T15:01:34.441Z - Dünya verileri çekiliyor
+[INFO] 2025-10-07T15:01:34.442Z - 🌐 Dünya verileri için tarayıcı başlatılıyor (Puppeteer)
+[INFO] 2025-10-07T15:01:34.761Z - 📄 Sayfa yükleniyor: https://www.worldometers.info/world-population/
+[INFO] 2025-10-07T15:01:38.720Z - ⏳ Dünya veri elementleri bekleniyor...
+[ERROR] 2025-10-07T15:01:38.741Z - 💥 Dünya veri çekme hatası: page.waitForTimeout is not a function
+[INFO] 2025-10-07T15:01:39.180Z - 📸 Debug screenshot kaydedildi: debug-world-1759849298742.png
+[WARN] 2025-10-07T15:01:39.185Z - ⚠️ Screenshot/HTML kaydedilemedi
+[INFO] 2025-10-07T15:01:39.810Z - 🔚 Tarayıcı kapatıldı
+[INFO] 2025-10-07T15:01:39.811Z - 10 saniye bekleniyor
+[INFO] 2025-10-07T15:01:49.819Z - Ülke verileri çekiliyor
+[INFO] 2025-10-07T15:01:49.820Z - 🌍 Ülke verileri için tarayıcı başlatılıyor
+[INFO] 2025-10-07T15:01:50.070Z - 📄 Sayfa yükleniyor: https://www.worldometers.info/world-population/population-by-country/
+[INFO] 2025-10-07T15:01:51.024Z - ⏳ Nüfus tablosu yüklenmesi bekleniyor...
+[ERROR] 2025-10-07T15:01:51.100Z - 💥 Ülke veri çekme hatası: page.waitForTimeout is not a function
+[INFO] 2025-10-07T15:01:51.547Z - 📸 Hata screenshot'ı kaydedildi
+[INFO] 2025-10-07T15:01:51.656Z - 🔚 Tarayıcı kapatıldı
+[INFO] 2025-10-07T15:01:51.657Z - Veriler Elasticsearch'e gönderiliyor
+[INFO] 2025-10-07T15:01:51.658Z - 📤 Elasticsearch'e veri gönderiliyor...
+[WARN] 2025-10-07T15:01:51.659Z - ⚠️ Gönderilecek veri yok
+[INFO] 2025-10-07T15:01:51.660Z - Snapshot güncelleniyor
+[INFO] 2025-10-07T15:01:51.661Z - 🔄 Snapshot güncelleniyor: 2025-10-07T15:01:51.660Z
+[SUCCESS] 2025-10-07T15:01:51.671Z - ✅ Snapshot güncellendi: 0 kayıt aktif
+[SUCCESS] 2025-10-07T15:01:51.672Z - Veri çekme işlemi #639 tamamlandı - Süre: 17.231s
+[INFO] 2025-10-07T15:01:51.672Z - Bir sonraki veri çekme işlemi 4 dakika sonra
+[SUCCESS] 2025-10-07T15:01:51.673Z - Uygulama başlatıldı - Her 4 dakikada bir veri çekilecek
+[INFO] 2025-10-07T15:02:38.679Z - Uygulama başlatılıyor
+[INFO] 2025-10-07T15:02:38.680Z - 📁 Index hazırlanıyor: world_population_data
+[INFO] 2025-10-07T15:02:38.680Z - 🔌 Elasticsearch bağlantısı test ediliyor...
+[SUCCESS] 2025-10-07T15:02:38.707Z - ✅ Elasticsearch bağlantısı başarılı - Cluster: docker-cluster
+[INFO] 2025-10-07T15:02:38.713Z - ℹ️ Index zaten mevcut: world_population_data
+[INFO] 2025-10-07T15:02:38.717Z - 🔍 Mevcut mapping kontrol edildi
+[INFO] 2025-10-07T15:02:38.718Z - İlk veri çekme işlemi başlatılıyor
+[INFO] 2025-10-07T15:02:38.718Z - Veri çekme işlemi #740 başlatıldı
+[INFO] 2025-10-07T15:02:38.719Z - Dünya verileri çekiliyor
+[INFO] 2025-10-07T15:02:38.720Z - 🌐 Dünya verileri için tarayıcı başlatılıyor (Puppeteer)
+[INFO] 2025-10-07T15:02:39.061Z - 📄 Sayfa yükleniyor: https://www.worldometers.info/world-population/
+[INFO] 2025-10-07T15:02:43.803Z - ⏳ Dünya veri elementleri bekleniyor...
+[ERROR] 2025-10-07T15:02:43.820Z - 💥 Dünya veri çekme hatası: page.waitForTimeout is not a function
+[INFO] 2025-10-07T15:02:44.253Z - 📸 Debug screenshot kaydedildi: debug-world-1759849363820.png
+[WARN] 2025-10-07T15:02:44.259Z - ⚠️ Screenshot/HTML kaydedilemedi
+[INFO] 2025-10-07T15:02:44.398Z - 🔚 Tarayıcı kapatıldı
+[INFO] 2025-10-07T15:02:44.398Z - 10 saniye bekleniyor
+[INFO] 2025-10-07T15:02:54.401Z - Ülke verileri çekiliyor
+[INFO] 2025-10-07T15:02:54.402Z - 🌍 Ülke verileri için tarayıcı başlatılıyor
+[INFO] 2025-10-07T15:02:54.667Z - 📄 Sayfa yükleniyor: https://www.worldometers.info/world-population/population-by-country/
+[INFO] 2025-10-07T15:02:55.495Z - ⏳ Nüfus tablosu yüklenmesi bekleniyor...
+[ERROR] 2025-10-07T15:02:55.556Z - 💥 Ülke veri çekme hatası: page.waitForTimeout is not a function
+[INFO] 2025-10-07T15:02:55.971Z - 📸 Hata screenshot'ı kaydedildi
+[INFO] 2025-10-07T15:02:56.070Z - 🔚 Tarayıcı kapatıldı
+[INFO] 2025-10-07T15:02:56.070Z - Veriler Elasticsearch'e gönderiliyor
+[INFO] 2025-10-07T15:02:56.071Z - 📤 Elasticsearch'e veri gönderiliyor...
+[WARN] 2025-10-07T15:02:56.071Z - ⚠️ Gönderilecek veri yok
+[INFO] 2025-10-07T15:02:56.072Z - Snapshot güncelleniyor
+[INFO] 2025-10-07T15:02:56.072Z - 🔄 Snapshot güncelleniyor: 2025-10-07T15:02:56.072Z
+[SUCCESS] 2025-10-07T15:02:56.079Z - ✅ Snapshot güncellendi: 0 kayıt aktif
+[SUCCESS] 2025-10-07T15:02:56.079Z - Veri çekme işlemi #740 tamamlandı - Süre: 17.361s
+[INFO] 2025-10-07T15:02:56.080Z - Bir sonraki veri çekme işlemi 4 dakika sonra
+[SUCCESS] 2025-10-07T15:02:56.080Z - Uygulama başlatıldı - Her 4 dakikada bir veri çekilecek
+[INFO] 2025-10-07T15:03:43.448Z - Uygulama başlatılıyor
+[INFO] 2025-10-07T15:03:43.449Z - 📁 Index hazırlanıyor: world_population_data
+[INFO] 2025-10-07T15:03:43.449Z - 🔌 Elasticsearch bağlantısı test ediliyor...
+[SUCCESS] 2025-10-07T15:03:43.468Z - ✅ Elasticsearch bağlantısı başarılı - Cluster: docker-cluster
+[INFO] 2025-10-07T15:03:43.473Z - ℹ️ Index zaten mevcut: world_population_data
+[INFO] 2025-10-07T15:03:43.475Z - 🔍 Mevcut mapping kontrol edildi
+[INFO] 2025-10-07T15:03:43.475Z - İlk veri çekme işlemi başlatılıyor
+[INFO] 2025-10-07T15:03:43.476Z - Veri çekme işlemi #966 başlatıldı
+[INFO] 2025-10-07T15:03:43.476Z - Dünya verileri çekiliyor
+[INFO] 2025-10-07T15:03:43.477Z - 🌐 Dünya verileri için tarayıcı başlatılıyor (Puppeteer)
+[INFO] 2025-10-07T15:03:43.772Z - 📄 Sayfa yükleniyor: https://www.worldometers.info/world-population/
+[INFO] 2025-10-07T15:03:46.595Z - ⏳ Dünya veri elementleri bekleniyor...
+[ERROR] 2025-10-07T15:03:46.617Z - 💥 Dünya veri çekme hatası: page.waitForTimeout is not a function
+[INFO] 2025-10-07T15:03:47.085Z - 📸 Debug screenshot kaydedildi: debug-world-1759849426618.png
+[WARN] 2025-10-07T15:03:47.089Z - ⚠️ Screenshot/HTML kaydedilemedi
+[INFO] 2025-10-07T15:03:47.717Z - 🔚 Tarayıcı kapatıldı
+[INFO] 2025-10-07T15:03:47.718Z - 10 saniye bekleniyor
+[INFO] 2025-10-07T15:03:57.729Z - Ülke verileri çekiliyor
+[INFO] 2025-10-07T15:03:57.731Z - 🌍 Ülke verileri için tarayıcı başlatılıyor
+[INFO] 2025-10-07T15:03:57.987Z - 📄 Sayfa yükleniyor: https://www.worldometers.info/world-population/population-by-country/
+[INFO] 2025-10-07T15:03:58.948Z - ⏳ Nüfus tablosu yüklenmesi bekleniyor...
+[ERROR] 2025-10-07T15:03:59.046Z - 💥 Ülke veri çekme hatası: page.waitForTimeout is not a function
+[INFO] 2025-10-07T15:03:59.485Z - 📸 Hata screenshot'ı kaydedildi
+[INFO] 2025-10-07T15:03:59.582Z - 🔚 Tarayıcı kapatıldı
+[INFO] 2025-10-07T15:03:59.583Z - Veriler Elasticsearch'e gönderiliyor
+[INFO] 2025-10-07T15:03:59.584Z - 📤 Elasticsearch'e veri gönderiliyor...
+[WARN] 2025-10-07T15:03:59.584Z - ⚠️ Gönderilecek veri yok
+[INFO] 2025-10-07T15:03:59.585Z - Snapshot güncelleniyor
+[INFO] 2025-10-07T15:03:59.585Z - 🔄 Snapshot güncelleniyor: 2025-10-07T15:03:59.585Z
+[SUCCESS] 2025-10-07T15:03:59.592Z - ✅ Snapshot güncellendi: 0 kayıt aktif
+[SUCCESS] 2025-10-07T15:03:59.593Z - Veri çekme işlemi #966 tamamlandı - Süre: 16.117s
+[INFO] 2025-10-07T15:03:59.593Z - Bir sonraki veri çekme işlemi 4 dakika sonra
+[SUCCESS] 2025-10-07T15:03:59.594Z - Uygulama başlatıldı - Her 4 dakikada bir veri çekilecek
+[INFO] 2025-10-07T15:06:20.054Z - Uygulama başlatılıyor
+[INFO] 2025-10-07T15:06:20.055Z - 📁 Index hazırlanıyor: world_population_data
+[INFO] 2025-10-07T15:06:20.056Z - 🔌 Elasticsearch bağlantısı test ediliyor...
+[SUCCESS] 2025-10-07T15:06:20.076Z - ✅ Elasticsearch bağlantısı başarılı - Cluster: docker-cluster
+[INFO] 2025-10-07T15:06:20.080Z - ℹ️ Index zaten mevcut: world_population_data
+[INFO] 2025-10-07T15:06:20.082Z - 🔍 Mevcut mapping kontrol edildi
+[INFO] 2025-10-07T15:06:20.083Z - İlk veri çekme işlemi başlatılıyor
+[INFO] 2025-10-07T15:06:20.083Z - Veri çekme işlemi #469 başlatıldı
+[INFO] 2025-10-07T15:06:20.084Z - Dünya verileri çekiliyor
+[INFO] 2025-10-07T15:06:20.085Z - 🌐 Dünya verileri için tarayıcı başlatılıyor (Puppeteer)
+[INFO] 2025-10-07T15:06:20.417Z - 📄 Sayfa yükleniyor: https://www.worldometers.info/world-population/
+[INFO] 2025-10-07T15:06:25.766Z - ⏳ Dünya veri elementleri bekleniyor...
+[ERROR] 2025-10-07T15:06:25.784Z - 💥 Dünya veri çekme hatası: page.waitForTimeout is not a function
+[INFO] 2025-10-07T15:06:26.244Z - 📸 Debug screenshot kaydedildi: debug-world-1759849585784.png
+[WARN] 2025-10-07T15:06:26.249Z - ⚠️ Screenshot/HTML kaydedilemedi
+[INFO] 2025-10-07T15:06:26.388Z - 🔚 Tarayıcı kapatıldı
+[INFO] 2025-10-07T15:06:26.389Z - 10 saniye bekleniyor
+[INFO] 2025-10-07T15:06:36.396Z - Ülke verileri çekiliyor
+[INFO] 2025-10-07T15:06:36.398Z - Ülke verileri için tarayıcı başlatılıyor
+[INFO] 2025-10-07T15:06:36.644Z - Sayfa yükleniyor: https://www.worldometers.info/world-population/population-by-country/
+[INFO] 2025-10-07T15:06:37.506Z - Nüfus tablosu yüklenmesi bekleniyor
+[INFO] 2025-10-07T15:06:37.604Z - Ülke verileri çekiliyor
+[INFO] 2025-10-07T15:06:37.609Z - Ülke verileri işleniyor
+[WARN] 2025-10-07T15:06:37.612Z - Geçersiz veri atlandı: saint-vincent-and-the-grenadines - 99924
+[WARN] 2025-10-07T15:06:37.613Z - Geçersiz veri atlandı: antigua-and-barbuda - 94209
+[WARN] 2025-10-07T15:06:37.613Z - Geçersiz veri atlandı: united-states-virgin-islands - 84138
+[WARN] 2025-10-07T15:06:37.613Z - Geçersiz veri atlandı: isle-of-man - 84118
+[WARN] 2025-10-07T15:06:37.614Z - Geçersiz veri atlandı: andorra - 82904
+[WARN] 2025-10-07T15:06:37.614Z - Geçersiz veri atlandı: cayman-islands - 75844
+[WARN] 2025-10-07T15:06:37.615Z - Geçersiz veri atlandı: dominica - 65871
+[WARN] 2025-10-07T15:06:37.615Z - Geçersiz veri atlandı: bermuda - 64555
+[WARN] 2025-10-07T15:06:37.615Z - Geçersiz veri atlandı: faeroe-islands - 56002
+[WARN] 2025-10-07T15:06:37.616Z - Geçersiz veri atlandı: greenland - 55745
+[WARN] 2025-10-07T15:06:37.616Z - Geçersiz veri atlandı: saint-kitts-and-nevis - 46922
+[WARN] 2025-10-07T15:06:37.616Z - Geçersiz veri atlandı: turks-and-caicos-islands - 46855
+[WARN] 2025-10-07T15:06:37.617Z - Geçersiz veri atlandı: american-samoa - 46029
+[WARN] 2025-10-07T15:06:37.617Z - Geçersiz veri atlandı: sint-maarten - 43923
+[WARN] 2025-10-07T15:06:37.617Z - Geçersiz veri atlandı: northern-mariana-islands - 43541
+[WARN] 2025-10-07T15:06:37.618Z - Geçersiz veri atlandı: liechtenstein - 40128
+[WARN] 2025-10-07T15:06:37.618Z - Geçersiz veri atlandı: gibraltar - 40126
+[WARN] 2025-10-07T15:06:37.618Z - Geçersiz veri atlandı: british-virgin-islands - 39732
+[WARN] 2025-10-07T15:06:37.619Z - Geçersiz veri atlandı: monaco - 38341
+[WARN] 2025-10-07T15:06:37.619Z - Geçersiz veri atlandı: marshall-islands - 36282
+[WARN] 2025-10-07T15:06:37.620Z - Geçersiz veri atlandı: san-marino - 33572
+[WARN] 2025-10-07T15:06:37.620Z - Geçersiz veri atlandı: caribbean-netherlands - 31338
+[WARN] 2025-10-07T15:06:37.620Z - Geçersiz veri atlandı: palau - 17663
+[WARN] 2025-10-07T15:06:37.621Z - Geçersiz veri atlandı: anguilla - 14728
+[WARN] 2025-10-07T15:06:37.621Z - Geçersiz veri atlandı: cook-islands - 13263
+[WARN] 2025-10-07T15:06:37.622Z - Geçersiz veri atlandı: nauru - 12025
+[WARN] 2025-10-07T15:06:37.622Z - Geçersiz veri atlandı: saint-barthelemy - 11414
+[WARN] 2025-10-07T15:06:37.623Z - Geçersiz veri atlandı: wallis-and-futuna-islands - 11194
+[WARN] 2025-10-07T15:06:37.623Z - Geçersiz veri atlandı: tuvalu - 9492
+[WARN] 2025-10-07T15:06:37.623Z - Geçersiz veri atlandı: saint-pierre-and-miquelon - 5574
+[WARN] 2025-10-07T15:06:37.624Z - Geçersiz veri atlandı: saint-helena - 5197
+[WARN] 2025-10-07T15:06:37.624Z - Geçersiz veri atlandı: montserrat - 4359
+[WARN] 2025-10-07T15:06:37.624Z - Geçersiz veri atlandı: falkland-islands-malvinas - 3469
+[WARN] 2025-10-07T15:06:37.625Z - Geçersiz veri atlandı: tokelau - 2608
+[WARN] 2025-10-07T15:06:37.625Z - Geçersiz veri atlandı: niue - 1821
+[WARN] 2025-10-07T15:06:37.626Z - Geçersiz veri atlandı: holy-see - 501
+[DATA] 2025-10-07T15:06:37.626Z - Ülke verileri işlendi: 197 records 
+[INFO] 2025-10-07T15:06:37.626Z - 📊 İSTATİSTİKLER:
+[INFO] 2025-10-07T15:06:37.627Z -    • Toplam ülke: 197
+[INFO] 2025-10-07T15:06:37.639Z -    • Toplam nüfus: 8.228.382.136
+[INFO] 2025-10-07T15:06:37.639Z -    • Ortalama yıllık değişim: 1.26%
+[INFO] 2025-10-07T15:06:37.640Z - 🌍 İLK 5 ÜLKE:
+[INFO] 2025-10-07T15:06:37.640Z -    1. india (IN) - 1.463.865.525
+[INFO] 2025-10-07T15:06:37.641Z -    2. china (CN) - 1.416.096.094
+[INFO] 2025-10-07T15:06:37.641Z -    3. us () - 347.275.807
+[INFO] 2025-10-07T15:06:37.641Z -    4. indonesia (ID) - 285.721.236
+[INFO] 2025-10-07T15:06:37.642Z -    5. pakistan (PK) - 255.219.554
+[INFO] 2025-10-07T15:06:37.740Z - Tarayıcı kapatıldı
+[SUCCESS] 2025-10-07T15:06:37.740Z - Toplam ülke sayısı: 197
+[INFO] 2025-10-07T15:06:37.741Z - Veriler Elasticsearch'e gönderiliyor
+[INFO] 2025-10-07T15:06:37.742Z - 📤 Elasticsearch'e veri gönderiliyor...
+[INFO] 2025-10-07T15:06:37.742Z - 🇺🇳 Ülke verileri hazır: 197 kayıt
+[INFO] 2025-10-07T15:06:37.743Z - 🔄 Elasticsearch bulk operasyonu başlatılıyor: 197 kayıt
+[WARN] 2025-10-07T15:06:37.752Z - ❌ Elasticsearch hatası [0]: [1:210] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.753Z - ❌ Elasticsearch hatası [1]: [1:209] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.753Z - ❌ Elasticsearch hatası [2]: [1:201] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.753Z - ❌ Elasticsearch hatası [3]: [1:215] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.754Z - ❌ Elasticsearch hatası [4]: [1:229] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.754Z - ❌ Elasticsearch hatası [5]: [1:211] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.754Z - ❌ Elasticsearch hatası [6]: [1:209] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.755Z - ❌ Elasticsearch hatası [7]: [1:230] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.755Z - ❌ Elasticsearch hatası [8]: [1:223] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.755Z - ❌ Elasticsearch hatası [9]: [1:214] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.756Z - ❌ Elasticsearch hatası [10]: [1:211] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.756Z - ❌ Elasticsearch hatası [11]: [1:208] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.756Z - ❌ Elasticsearch hatası [12]: [1:222] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.757Z - ❌ Elasticsearch hatası [13]: [1:234] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.757Z - ❌ Elasticsearch hatası [14]: [1:260] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.757Z - ❌ Elasticsearch hatası [15]: [1:210] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.758Z - ❌ Elasticsearch hatası [16]: [1:217] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.758Z - ❌ Elasticsearch hatası [17]: [1:209] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.758Z - ❌ Elasticsearch hatası [18]: [1:225] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.759Z - ❌ Elasticsearch hatası [19]: [1:226] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.759Z - ❌ Elasticsearch hatası [20]: [1:225] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.759Z - ❌ Elasticsearch hatası [21]: [1:198] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.760Z - ❌ Elasticsearch hatası [22]: [1:208] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.760Z - ❌ Elasticsearch hatası [23]: [1:219] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.760Z - ❌ Elasticsearch hatası [24]: [1:206] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.761Z - ❌ Elasticsearch hatası [25]: [1:203] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.761Z - ❌ Elasticsearch hatası [26]: [1:208] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.761Z - ❌ Elasticsearch hatası [27]: [1:211] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.762Z - ❌ Elasticsearch hatası [28]: [1:214] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.762Z - ❌ Elasticsearch hatası [29]: [1:207] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.762Z - ❌ Elasticsearch hatası [30]: [1:208] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.763Z - ❌ Elasticsearch hatası [31]: [1:205] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.763Z - ❌ Elasticsearch hatası [32]: [1:224] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.763Z - ❌ Elasticsearch hatası [33]: [1:203] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.764Z - ❌ Elasticsearch hatası [34]: [1:228] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.764Z - ❌ Elasticsearch hatası [35]: [1:219] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.764Z - ❌ Elasticsearch hatası [36]: [1:221] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.765Z - ❌ Elasticsearch hatası [37]: [1:209] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.765Z - ❌ Elasticsearch hatası [38]: [1:208] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.765Z - ❌ Elasticsearch hatası [39]: [1:213] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.766Z - ❌ Elasticsearch hatası [40]: [1:210] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.766Z - ❌ Elasticsearch hatası [41]: [1:209] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.766Z - ❌ Elasticsearch hatası [42]: [1:212] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.767Z - ❌ Elasticsearch hatası [43]: [1:211] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.767Z - ❌ Elasticsearch hatası [44]: [1:230] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.767Z - ❌ Elasticsearch hatası [45]: [1:220] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.768Z - ❌ Elasticsearch hatası [46]: [1:204] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.768Z - ❌ Elasticsearch hatası [47]: [1:219] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.768Z - ❌ Elasticsearch hatası [48]: [1:229] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.769Z - ❌ Elasticsearch hatası [49]: [1:234] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.769Z - ❌ Elasticsearch hatası [50]: [1:210] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.769Z - ❌ Elasticsearch hatası [51]: [1:206] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.770Z - ❌ Elasticsearch hatası [52]: [1:230] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.770Z - ❌ Elasticsearch hatası [53]: [1:217] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.770Z - ❌ Elasticsearch hatası [54]: [1:215] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.771Z - ❌ Elasticsearch hatası [55]: [1:214] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.771Z - ❌ Elasticsearch hatası [56]: [1:205] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.772Z - ❌ Elasticsearch hatası [57]: [1:202] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.772Z - ❌ Elasticsearch hatası [58]: [1:218] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.772Z - ❌ Elasticsearch hatası [59]: [1:212] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.773Z - ❌ Elasticsearch hatası [60]: [1:208] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.773Z - ❌ Elasticsearch hatası [61]: [1:205] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.773Z - ❌ Elasticsearch hatası [62]: [1:205] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.774Z - ❌ Elasticsearch hatası [63]: [1:203] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.774Z - ❌ Elasticsearch hatası [64]: [1:227] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.774Z - ❌ Elasticsearch hatası [65]: [1:203] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.775Z - ❌ Elasticsearch hatası [66]: [1:207] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.775Z - ❌ Elasticsearch hatası [67]: [1:208] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.775Z - ❌ Elasticsearch hatası [68]: [1:222] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.775Z - ❌ Elasticsearch hatası [69]: [1:225] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.776Z - ❌ Elasticsearch hatası [70]: [1:231] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.776Z - ❌ Elasticsearch hatası [71]: [1:208] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.777Z - ❌ Elasticsearch hatası [72]: [1:224] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.777Z - ❌ Elasticsearch hatası [73]: [1:209] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.777Z - ❌ Elasticsearch hatası [74]: [1:220] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.778Z - ❌ Elasticsearch hatası [75]: [1:215] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.778Z - ❌ Elasticsearch hatası [76]: [1:205] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.778Z - ❌ Elasticsearch hatası [77]: [1:222] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.779Z - ❌ Elasticsearch hatası [78]: [1:221] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.779Z - ❌ Elasticsearch hatası [79]: [1:207] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.779Z - ❌ Elasticsearch hatası [80]: [1:229] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.779Z - ❌ Elasticsearch hatası [81]: [1:204] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.780Z - ❌ Elasticsearch hatası [82]: [1:222] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.780Z - ❌ Elasticsearch hatası [83]: [1:221] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.780Z - ❌ Elasticsearch hatası [84]: [1:243] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.781Z - ❌ Elasticsearch hatası [85]: [1:249] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.781Z - ❌ Elasticsearch hatası [86]: [1:209] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.781Z - ❌ Elasticsearch hatası [87]: [1:216] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.782Z - ❌ Elasticsearch hatası [88]: [1:228] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.782Z - ❌ Elasticsearch hatası [89]: [1:224] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.782Z - ❌ Elasticsearch hatası [90]: [1:219] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.783Z - ❌ Elasticsearch hatası [91]: [1:209] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.783Z - ❌ Elasticsearch hatası [92]: [1:209] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.783Z - ❌ Elasticsearch hatası [93]: [1:212] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.784Z - ❌ Elasticsearch hatası [94]: [1:205] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.784Z - ❌ Elasticsearch hatası [95]: [1:201] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.784Z - ❌ Elasticsearch hatası [96]: [1:221] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.785Z - ❌ Elasticsearch hatası [97]: [1:205] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.785Z - ❌ Elasticsearch hatası [98]: [1:205] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.785Z - ❌ Elasticsearch hatası [99]: [1:220] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.786Z - ❌ Elasticsearch hatası [100]: [1:215] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.786Z - ❌ Elasticsearch hatası [101]: [1:218] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.786Z - ❌ Elasticsearch hatası [102]: [1:216] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.787Z - ❌ Elasticsearch hatası [103]: [1:218] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.787Z - ❌ Elasticsearch hatası [104]: [1:201] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.787Z - ❌ Elasticsearch hatası [105]: [1:231] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.787Z - ❌ Elasticsearch hatası [106]: [1:213] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.788Z - ❌ Elasticsearch hatası [107]: [1:207] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.788Z - ❌ Elasticsearch hatası [108]: [1:208] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.788Z - ❌ Elasticsearch hatası [109]: [1:208] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.789Z - ❌ Elasticsearch hatası [110]: [1:219] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.789Z - ❌ Elasticsearch hatası [111]: [1:203] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.789Z - ❌ Elasticsearch hatası [112]: [1:215] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.790Z - ❌ Elasticsearch hatası [113]: [1:207] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.790Z - ❌ Elasticsearch hatası [114]: [1:211] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.790Z - ❌ Elasticsearch hatası [115]: [1:207] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.790Z - ❌ Elasticsearch hatası [116]: [1:221] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.791Z - ❌ Elasticsearch hatası [117]: [1:206] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.791Z - ❌ Elasticsearch hatası [118]: [1:205] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.791Z - ❌ Elasticsearch hatası [119]: [1:229] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.792Z - ❌ Elasticsearch hatası [120]: [1:256] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.792Z - ❌ Elasticsearch hatası [121]: [1:203] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.792Z - ❌ Elasticsearch hatası [122]: [1:209] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.793Z - ❌ Elasticsearch hatası [123]: [1:213] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.793Z - ❌ Elasticsearch hatası [124]: [1:205] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.793Z - ❌ Elasticsearch hatası [125]: [1:215] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.794Z - ❌ Elasticsearch hatası [126]: [1:227] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.794Z - ❌ Elasticsearch hatası [127]: [1:219] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.794Z - ❌ Elasticsearch hatası [128]: [1:204] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.795Z - ❌ Elasticsearch hatası [129]: [1:220] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.795Z - ❌ Elasticsearch hatası [130]: [1:204] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.795Z - ❌ Elasticsearch hatası [131]: [1:206] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.796Z - ❌ Elasticsearch hatası [132]: [1:205] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.796Z - ❌ Elasticsearch hatası [133]: [1:205] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.796Z - ❌ Elasticsearch hatası [134]: [1:213] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.797Z - ❌ Elasticsearch hatası [135]: [1:236] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.797Z - ❌ Elasticsearch hatası [136]: [1:217] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.797Z - ❌ Elasticsearch hatası [137]: [1:206] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.797Z - ❌ Elasticsearch hatası [138]: [1:207] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.798Z - ❌ Elasticsearch hatası [139]: [1:207] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.798Z - ❌ Elasticsearch hatası [140]: [1:221] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.798Z - ❌ Elasticsearch hatası [141]: [1:211] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.799Z - ❌ Elasticsearch hatası [142]: [1:204] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.799Z - ❌ Elasticsearch hatası [143]: [1:207] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.799Z - ❌ Elasticsearch hatası [144]: [1:202] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.800Z - ❌ Elasticsearch hatası [145]: [1:208] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.800Z - ❌ Elasticsearch hatası [146]: [1:206] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.801Z - ❌ Elasticsearch hatası [147]: [1:218] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.801Z - ❌ Elasticsearch hatası [148]: [1:207] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.802Z - ❌ Elasticsearch hatası [149]: [1:240] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.802Z - ❌ Elasticsearch hatası [150]: [1:204] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.802Z - ❌ Elasticsearch hatası [151]: [1:219] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.803Z - ❌ Elasticsearch hatası [152]: [1:207] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.803Z - ❌ Elasticsearch hatası [153]: [1:228] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.803Z - ❌ Elasticsearch hatası [154]: [1:214] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.803Z - ❌ Elasticsearch hatası [155]: [1:204] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.804Z - ❌ Elasticsearch hatası [156]: [1:206] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.804Z - ❌ Elasticsearch hatası [157]: [1:209] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.804Z - ❌ Elasticsearch hatası [158]: [1:224] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.805Z - ❌ Elasticsearch hatası [159]: [1:207] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.805Z - ❌ Elasticsearch hatası [160]: [1:212] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.805Z - ❌ Elasticsearch hatası [161]: [1:205] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.806Z - ❌ Elasticsearch hatası [162]: [1:204] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.806Z - ❌ Elasticsearch hatası [163]: [1:235] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.806Z - ❌ Elasticsearch hatası [164]: [1:202] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.807Z - ❌ Elasticsearch hatası [165]: [1:215] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.807Z - ❌ Elasticsearch hatası [166]: [1:219] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.807Z - ❌ Elasticsearch hatası [167]: [1:224] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.808Z - ❌ Elasticsearch hatası [168]: [1:205] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.808Z - ❌ Elasticsearch hatası [169]: [1:222] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.808Z - ❌ Elasticsearch hatası [170]: [1:219] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.809Z - ❌ Elasticsearch hatası [171]: [1:214] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.809Z - ❌ Elasticsearch hatası [172]: [1:206] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.809Z - ❌ Elasticsearch hatası [173]: [1:222] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.810Z - ❌ Elasticsearch hatası [174]: [1:236] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.810Z - ❌ Elasticsearch hatası [175]: [1:215] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.810Z - ❌ Elasticsearch hatası [176]: [1:203] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.811Z - ❌ Elasticsearch hatası [177]: [1:204] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.811Z - ❌ Elasticsearch hatası [178]: [1:225] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.811Z - ❌ Elasticsearch hatası [179]: [1:209] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.812Z - ❌ Elasticsearch hatası [180]: [1:203] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.812Z - ❌ Elasticsearch hatası [181]: [1:202] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.812Z - ❌ Elasticsearch hatası [182]: [1:213] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.813Z - ❌ Elasticsearch hatası [183]: [1:215] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.813Z - ❌ Elasticsearch hatası [184]: [1:203] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.813Z - ❌ Elasticsearch hatası [185]: [1:221] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.814Z - ❌ Elasticsearch hatası [186]: [1:229] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.814Z - ❌ Elasticsearch hatası [187]: [1:200] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.814Z - ❌ Elasticsearch hatası [188]: [1:195] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.815Z - ❌ Elasticsearch hatası [189]: [1:209] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.815Z - ❌ Elasticsearch hatası [190]: [1:197] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.815Z - ❌ Elasticsearch hatası [191]: [1:205] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.815Z - ❌ Elasticsearch hatası [192]: [1:210] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.816Z - ❌ Elasticsearch hatası [193]: [1:201] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.816Z - ❌ Elasticsearch hatası [194]: [1:209] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.816Z - ❌ Elasticsearch hatası [195]: [1:212] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:06:37.817Z - ❌ Elasticsearch hatası [196]: [1:199] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[DATA] 2025-10-07T15:06:37.817Z - Elasticsearch'e gönderildi: 0 records Hatalı: 197
+[INFO] 2025-10-07T15:06:37.817Z - 📊 ÜLKE VERİSİ ÖZETİ:
+[INFO] 2025-10-07T15:06:37.818Z -    • Toplam ülke: 197
+[INFO] 2025-10-07T15:06:37.818Z -    • İlk ülke: india (1.463.865.525)
+[WARN] 2025-10-07T15:06:37.818Z - ⚠️ Toplam hata: 197
+[WARN] 2025-10-07T15:06:37.819Z - Hatalı kayıt: 197
+[INFO] 2025-10-07T15:06:37.819Z - Snapshot güncelleniyor
+[INFO] 2025-10-07T15:06:37.820Z - 🔄 Snapshot güncelleniyor: 2025-10-07T15:06:37.819Z
+[SUCCESS] 2025-10-07T15:06:37.824Z - ✅ Snapshot güncellendi: 0 kayıt aktif
+[SUCCESS] 2025-10-07T15:06:37.825Z - Veri çekme işlemi #469 tamamlandı - Süre: 17.742s
+[INFO] 2025-10-07T15:06:37.825Z - Bir sonraki veri çekme işlemi 4 dakika sonra
+[SUCCESS] 2025-10-07T15:06:37.826Z - Uygulama başlatıldı - Her 4 dakikada bir veri çekilecek
+[INFO] 2025-10-07T15:11:02.914Z - Uygulama başlatılıyor
+[INFO] 2025-10-07T15:11:02.916Z - Index hazırlanıyor: world_population_data
+[INFO] 2025-10-07T15:11:02.916Z - Elasticsearch bağlantısı test ediliyor
+[SUCCESS] 2025-10-07T15:11:02.936Z - Elasticsearch bağlantısı başarılı - Cluster: docker-cluster
+[INFO] 2025-10-07T15:11:02.940Z - Yeni index oluşturuluyor
+[SUCCESS] 2025-10-07T15:11:03.064Z - Index oluşturuldu: world_population_data
+[INFO] 2025-10-07T15:11:03.065Z - İlk veri çekme işlemi başlatılıyor
+[INFO] 2025-10-07T15:11:03.066Z - Veri çekme işlemi #341 başlatıldı
+[INFO] 2025-10-07T15:11:03.066Z - Dünya verileri çekiliyor
+[INFO] 2025-10-07T15:11:03.067Z - Dünya verileri için tarayıcı başlatılıyor
+[INFO] 2025-10-07T15:11:03.374Z - Sayfa yükleniyor: https://www.worldometers.info/world-population/
+[INFO] 2025-10-07T15:11:08.322Z - Dünya veri elementleri bekleniyor
+[INFO] 2025-10-07T15:11:08.336Z - Dünya verileri çekiliyor
+[INFO] 2025-10-07T15:11:08.338Z - HAM VERİLER:
+[INFO] 2025-10-07T15:11:08.338Z - - current_population: "8250909051"
+[INFO] 2025-10-07T15:11:08.339Z - - births_today: "274875"
+[INFO] 2025-10-07T15:11:08.339Z - - dth1s_today: "129523"
+[INFO] 2025-10-07T15:11:08.340Z - - absolute_growth: "145352"
+[INFO] 2025-10-07T15:11:08.340Z - - births_this_year: "101484647"
+[INFO] 2025-10-07T15:11:08.341Z - - dth1s_this_year: "47820042"
+[INFO] 2025-10-07T15:11:08.341Z - - absolute_growth_year: "53664605"
+[INFO] 2025-10-07T15:11:08.342Z - Veriler işleniyor
+[INFO] 2025-10-07T15:11:08.342Z - İŞLENMİŞ VERİLER:
+[INFO] 2025-10-07T15:11:08.354Z - - Nüfus: 8.250.909.051
+[INFO] 2025-10-07T15:11:08.355Z - - Bugün Doğum: 274.875
+[INFO] 2025-10-07T15:11:08.355Z - - Bugün Ölüm: 129.523
+[INFO] 2025-10-07T15:11:08.355Z - - Bugün Büyüme: 145.352
+[SUCCESS] 2025-10-07T15:11:08.356Z - Dünya verileri başarıyla alındı
+[INFO] 2025-10-07T15:11:08.458Z - Tarayıcı kapatıldı
+[SUCCESS] 2025-10-07T15:11:08.459Z - Dünya nüfusu: 8.250.909.051
+[INFO] 2025-10-07T15:11:08.460Z - 10 saniye bekleniyor
+[INFO] 2025-10-07T15:11:18.475Z - Ülke verileri çekiliyor
+[INFO] 2025-10-07T15:11:18.477Z - Ülke verileri için tarayıcı başlatılıyor
+[INFO] 2025-10-07T15:11:18.784Z - Sayfa yükleniyor: https://www.worldometers.info/world-population/population-by-country/
+[INFO] 2025-10-07T15:11:19.850Z - Nüfus tablosu yüklenmesi bekleniyor
+[INFO] 2025-10-07T15:11:19.928Z - Ülke verileri çekiliyor
+[INFO] 2025-10-07T15:11:19.934Z - Ülke verileri işleniyor
+[WARN] 2025-10-07T15:11:19.936Z - Geçersiz veri atlandı: saint-vincent-and-the-grenadines - 99924
+[WARN] 2025-10-07T15:11:19.937Z - Geçersiz veri atlandı: antigua-and-barbuda - 94209
+[WARN] 2025-10-07T15:11:19.937Z - Geçersiz veri atlandı: united-states-virgin-islands - 84138
+[WARN] 2025-10-07T15:11:19.938Z - Geçersiz veri atlandı: isle-of-man - 84118
+[WARN] 2025-10-07T15:11:19.938Z - Geçersiz veri atlandı: andorra - 82904
+[WARN] 2025-10-07T15:11:19.939Z - Geçersiz veri atlandı: cayman-islands - 75844
+[WARN] 2025-10-07T15:11:19.940Z - Geçersiz veri atlandı: dominica - 65871
+[WARN] 2025-10-07T15:11:19.940Z - Geçersiz veri atlandı: bermuda - 64555
+[WARN] 2025-10-07T15:11:19.940Z - Geçersiz veri atlandı: faeroe-islands - 56002
+[WARN] 2025-10-07T15:11:19.941Z - Geçersiz veri atlandı: greenland - 55745
+[WARN] 2025-10-07T15:11:19.942Z - Geçersiz veri atlandı: saint-kitts-and-nevis - 46922
+[WARN] 2025-10-07T15:11:19.942Z - Geçersiz veri atlandı: turks-and-caicos-islands - 46855
+[WARN] 2025-10-07T15:11:19.942Z - Geçersiz veri atlandı: american-samoa - 46029
+[WARN] 2025-10-07T15:11:19.943Z - Geçersiz veri atlandı: sint-maarten - 43923
+[WARN] 2025-10-07T15:11:19.943Z - Geçersiz veri atlandı: northern-mariana-islands - 43541
+[WARN] 2025-10-07T15:11:19.944Z - Geçersiz veri atlandı: liechtenstein - 40128
+[WARN] 2025-10-07T15:11:19.944Z - Geçersiz veri atlandı: gibraltar - 40126
+[WARN] 2025-10-07T15:11:19.944Z - Geçersiz veri atlandı: british-virgin-islands - 39732
+[WARN] 2025-10-07T15:11:19.945Z - Geçersiz veri atlandı: monaco - 38341
+[WARN] 2025-10-07T15:11:19.945Z - Geçersiz veri atlandı: marshall-islands - 36282
+[WARN] 2025-10-07T15:11:19.946Z - Geçersiz veri atlandı: san-marino - 33572
+[WARN] 2025-10-07T15:11:19.946Z - Geçersiz veri atlandı: caribbean-netherlands - 31338
+[WARN] 2025-10-07T15:11:19.947Z - Geçersiz veri atlandı: palau - 17663
+[WARN] 2025-10-07T15:11:19.947Z - Geçersiz veri atlandı: anguilla - 14728
+[WARN] 2025-10-07T15:11:19.948Z - Geçersiz veri atlandı: cook-islands - 13263
+[WARN] 2025-10-07T15:11:19.948Z - Geçersiz veri atlandı: nauru - 12025
+[WARN] 2025-10-07T15:11:19.949Z - Geçersiz veri atlandı: saint-barthelemy - 11414
+[WARN] 2025-10-07T15:11:19.949Z - Geçersiz veri atlandı: wallis-and-futuna-islands - 11194
+[WARN] 2025-10-07T15:11:19.950Z - Geçersiz veri atlandı: tuvalu - 9492
+[WARN] 2025-10-07T15:11:19.950Z - Geçersiz veri atlandı: saint-pierre-and-miquelon - 5574
+[WARN] 2025-10-07T15:11:19.951Z - Geçersiz veri atlandı: saint-helena - 5197
+[WARN] 2025-10-07T15:11:19.951Z - Geçersiz veri atlandı: montserrat - 4359
+[WARN] 2025-10-07T15:11:19.952Z - Geçersiz veri atlandı: falkland-islands-malvinas - 3469
+[WARN] 2025-10-07T15:11:19.952Z - Geçersiz veri atlandı: tokelau - 2608
+[WARN] 2025-10-07T15:11:19.953Z - Geçersiz veri atlandı: niue - 1821
+[WARN] 2025-10-07T15:11:19.953Z - Geçersiz veri atlandı: holy-see - 501
+[DATA] 2025-10-07T15:11:19.953Z - Ülke verileri işlendi: 197 records 
+[INFO] 2025-10-07T15:11:19.954Z - 📊 İSTATİSTİKLER:
+[INFO] 2025-10-07T15:11:19.954Z -    • Toplam ülke: 197
+[INFO] 2025-10-07T15:11:19.955Z -    • Toplam nüfus: 8.228.382.136
+[INFO] 2025-10-07T15:11:19.955Z -    • Ortalama yıllık değişim: 1.26%
+[INFO] 2025-10-07T15:11:19.955Z - 🌍 İLK 5 ÜLKE:
+[INFO] 2025-10-07T15:11:19.956Z -    1. india (IN) - 1.463.865.525
+[INFO] 2025-10-07T15:11:19.956Z -    2. china (CN) - 1.416.096.094
+[INFO] 2025-10-07T15:11:19.956Z -    3. us () - 347.275.807
+[INFO] 2025-10-07T15:11:19.957Z -    4. indonesia (ID) - 285.721.236
+[INFO] 2025-10-07T15:11:19.957Z -    5. pakistan (PK) - 255.219.554
+[INFO] 2025-10-07T15:11:20.091Z - Tarayıcı kapatıldı
+[SUCCESS] 2025-10-07T15:11:20.092Z - Toplam ülke sayısı: 197
+[INFO] 2025-10-07T15:11:20.093Z - Veriler Elasticsearch'e gönderiliyor
+[INFO] 2025-10-07T15:11:20.094Z - Elasticsearch'e gönderilen veri:
+[INFO] 2025-10-07T15:11:20.094Z - - Dünya: Nüfus=8250909051, Doğum=274875, Ölüm=129523
+[INFO] 2025-10-07T15:11:20.095Z - - Ülke: 197 kayıt
+[WARN] 2025-10-07T15:11:20.116Z - Elasticsearch hatası: [1:210] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.117Z - Elasticsearch hatası: [1:209] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.118Z - Elasticsearch hatası: [1:201] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.118Z - Elasticsearch hatası: [1:215] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.118Z - Elasticsearch hatası: [1:229] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.119Z - Elasticsearch hatası: [1:211] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.119Z - Elasticsearch hatası: [1:209] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.120Z - Elasticsearch hatası: [1:230] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.120Z - Elasticsearch hatası: [1:223] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.121Z - Elasticsearch hatası: [1:214] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.122Z - Elasticsearch hatası: [1:211] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.122Z - Elasticsearch hatası: [1:208] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.122Z - Elasticsearch hatası: [1:222] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.123Z - Elasticsearch hatası: [1:234] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.124Z - Elasticsearch hatası: [1:260] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.124Z - Elasticsearch hatası: [1:210] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.124Z - Elasticsearch hatası: [1:217] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.125Z - Elasticsearch hatası: [1:209] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.126Z - Elasticsearch hatası: [1:225] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.126Z - Elasticsearch hatası: [1:226] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.126Z - Elasticsearch hatası: [1:225] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.127Z - Elasticsearch hatası: [1:198] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.128Z - Elasticsearch hatası: [1:208] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.128Z - Elasticsearch hatası: [1:219] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.129Z - Elasticsearch hatası: [1:206] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.130Z - Elasticsearch hatası: [1:203] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.130Z - Elasticsearch hatası: [1:208] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.130Z - Elasticsearch hatası: [1:211] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.131Z - Elasticsearch hatası: [1:214] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.131Z - Elasticsearch hatası: [1:207] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.132Z - Elasticsearch hatası: [1:208] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.132Z - Elasticsearch hatası: [1:205] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.133Z - Elasticsearch hatası: [1:224] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.133Z - Elasticsearch hatası: [1:203] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.134Z - Elasticsearch hatası: [1:228] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.134Z - Elasticsearch hatası: [1:219] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.135Z - Elasticsearch hatası: [1:221] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.135Z - Elasticsearch hatası: [1:209] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.136Z - Elasticsearch hatası: [1:208] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.136Z - Elasticsearch hatası: [1:213] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.137Z - Elasticsearch hatası: [1:210] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.137Z - Elasticsearch hatası: [1:209] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.137Z - Elasticsearch hatası: [1:212] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.138Z - Elasticsearch hatası: [1:211] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.138Z - Elasticsearch hatası: [1:230] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.139Z - Elasticsearch hatası: [1:220] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.139Z - Elasticsearch hatası: [1:204] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.140Z - Elasticsearch hatası: [1:219] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.140Z - Elasticsearch hatası: [1:229] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.141Z - Elasticsearch hatası: [1:234] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.142Z - Elasticsearch hatası: [1:210] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.142Z - Elasticsearch hatası: [1:206] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.142Z - Elasticsearch hatası: [1:230] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.143Z - Elasticsearch hatası: [1:217] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.143Z - Elasticsearch hatası: [1:215] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.144Z - Elasticsearch hatası: [1:214] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.144Z - Elasticsearch hatası: [1:205] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.145Z - Elasticsearch hatası: [1:202] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.145Z - Elasticsearch hatası: [1:218] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.146Z - Elasticsearch hatası: [1:212] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.147Z - Elasticsearch hatası: [1:208] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.147Z - Elasticsearch hatası: [1:205] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.148Z - Elasticsearch hatası: [1:205] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.148Z - Elasticsearch hatası: [1:203] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.149Z - Elasticsearch hatası: [1:227] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.149Z - Elasticsearch hatası: [1:203] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.149Z - Elasticsearch hatası: [1:207] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.150Z - Elasticsearch hatası: [1:208] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.150Z - Elasticsearch hatası: [1:222] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.151Z - Elasticsearch hatası: [1:225] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.151Z - Elasticsearch hatası: [1:231] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.152Z - Elasticsearch hatası: [1:208] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.152Z - Elasticsearch hatası: [1:224] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.152Z - Elasticsearch hatası: [1:209] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.153Z - Elasticsearch hatası: [1:220] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.153Z - Elasticsearch hatası: [1:215] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.154Z - Elasticsearch hatası: [1:205] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.155Z - Elasticsearch hatası: [1:222] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.155Z - Elasticsearch hatası: [1:221] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.156Z - Elasticsearch hatası: [1:207] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.156Z - Elasticsearch hatası: [1:229] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.157Z - Elasticsearch hatası: [1:204] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.157Z - Elasticsearch hatası: [1:222] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.158Z - Elasticsearch hatası: [1:221] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.158Z - Elasticsearch hatası: [1:243] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.159Z - Elasticsearch hatası: [1:249] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.160Z - Elasticsearch hatası: [1:209] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.160Z - Elasticsearch hatası: [1:216] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.161Z - Elasticsearch hatası: [1:228] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.161Z - Elasticsearch hatası: [1:224] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.162Z - Elasticsearch hatası: [1:219] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.162Z - Elasticsearch hatası: [1:209] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.163Z - Elasticsearch hatası: [1:209] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.163Z - Elasticsearch hatası: [1:212] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.164Z - Elasticsearch hatası: [1:205] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.164Z - Elasticsearch hatası: [1:201] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.165Z - Elasticsearch hatası: [1:221] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.165Z - Elasticsearch hatası: [1:205] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.166Z - Elasticsearch hatası: [1:205] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.166Z - Elasticsearch hatası: [1:220] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.167Z - Elasticsearch hatası: [1:215] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.167Z - Elasticsearch hatası: [1:218] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.168Z - Elasticsearch hatası: [1:216] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.168Z - Elasticsearch hatası: [1:218] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.168Z - Elasticsearch hatası: [1:201] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.169Z - Elasticsearch hatası: [1:231] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.169Z - Elasticsearch hatası: [1:213] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.170Z - Elasticsearch hatası: [1:207] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.170Z - Elasticsearch hatası: [1:208] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.171Z - Elasticsearch hatası: [1:208] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.171Z - Elasticsearch hatası: [1:219] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.171Z - Elasticsearch hatası: [1:203] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.172Z - Elasticsearch hatası: [1:215] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.172Z - Elasticsearch hatası: [1:207] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.173Z - Elasticsearch hatası: [1:211] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.173Z - Elasticsearch hatası: [1:207] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.174Z - Elasticsearch hatası: [1:221] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.174Z - Elasticsearch hatası: [1:206] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.174Z - Elasticsearch hatası: [1:205] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.175Z - Elasticsearch hatası: [1:229] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.175Z - Elasticsearch hatası: [1:256] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.176Z - Elasticsearch hatası: [1:203] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.176Z - Elasticsearch hatası: [1:209] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.176Z - Elasticsearch hatası: [1:213] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.177Z - Elasticsearch hatası: [1:205] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.177Z - Elasticsearch hatası: [1:215] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.178Z - Elasticsearch hatası: [1:227] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.178Z - Elasticsearch hatası: [1:219] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.178Z - Elasticsearch hatası: [1:204] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.179Z - Elasticsearch hatası: [1:220] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.179Z - Elasticsearch hatası: [1:204] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.179Z - Elasticsearch hatası: [1:206] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.180Z - Elasticsearch hatası: [1:205] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.180Z - Elasticsearch hatası: [1:205] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.181Z - Elasticsearch hatası: [1:213] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.181Z - Elasticsearch hatası: [1:236] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.182Z - Elasticsearch hatası: [1:217] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.182Z - Elasticsearch hatası: [1:206] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.182Z - Elasticsearch hatası: [1:207] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.183Z - Elasticsearch hatası: [1:207] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.183Z - Elasticsearch hatası: [1:221] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.183Z - Elasticsearch hatası: [1:211] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.184Z - Elasticsearch hatası: [1:204] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.184Z - Elasticsearch hatası: [1:207] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.184Z - Elasticsearch hatası: [1:202] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.185Z - Elasticsearch hatası: [1:208] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.185Z - Elasticsearch hatası: [1:206] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.186Z - Elasticsearch hatası: [1:218] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.186Z - Elasticsearch hatası: [1:207] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.186Z - Elasticsearch hatası: [1:240] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.187Z - Elasticsearch hatası: [1:204] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.187Z - Elasticsearch hatası: [1:219] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.187Z - Elasticsearch hatası: [1:207] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.188Z - Elasticsearch hatası: [1:228] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.188Z - Elasticsearch hatası: [1:214] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.189Z - Elasticsearch hatası: [1:204] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.189Z - Elasticsearch hatası: [1:206] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.189Z - Elasticsearch hatası: [1:209] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.190Z - Elasticsearch hatası: [1:224] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.190Z - Elasticsearch hatası: [1:207] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.191Z - Elasticsearch hatası: [1:212] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.191Z - Elasticsearch hatası: [1:205] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.191Z - Elasticsearch hatası: [1:204] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.192Z - Elasticsearch hatası: [1:235] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.192Z - Elasticsearch hatası: [1:202] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.192Z - Elasticsearch hatası: [1:215] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.193Z - Elasticsearch hatası: [1:219] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.193Z - Elasticsearch hatası: [1:224] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.193Z - Elasticsearch hatası: [1:205] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.194Z - Elasticsearch hatası: [1:222] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.194Z - Elasticsearch hatası: [1:219] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.194Z - Elasticsearch hatası: [1:214] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.195Z - Elasticsearch hatası: [1:206] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.195Z - Elasticsearch hatası: [1:222] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.195Z - Elasticsearch hatası: [1:236] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.196Z - Elasticsearch hatası: [1:215] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.196Z - Elasticsearch hatası: [1:203] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.196Z - Elasticsearch hatası: [1:204] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.197Z - Elasticsearch hatası: [1:225] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.197Z - Elasticsearch hatası: [1:209] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.197Z - Elasticsearch hatası: [1:203] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.198Z - Elasticsearch hatası: [1:202] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.198Z - Elasticsearch hatası: [1:213] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.198Z - Elasticsearch hatası: [1:215] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.199Z - Elasticsearch hatası: [1:203] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.199Z - Elasticsearch hatası: [1:221] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.200Z - Elasticsearch hatası: [1:229] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.200Z - Elasticsearch hatası: [1:200] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.201Z - Elasticsearch hatası: [1:195] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.201Z - Elasticsearch hatası: [1:209] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.201Z - Elasticsearch hatası: [1:197] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.202Z - Elasticsearch hatası: [1:205] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.202Z - Elasticsearch hatası: [1:210] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.203Z - Elasticsearch hatası: [1:201] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.203Z - Elasticsearch hatası: [1:209] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.203Z - Elasticsearch hatası: [1:212] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[WARN] 2025-10-07T15:11:20.203Z - Elasticsearch hatası: [1:199] mapping set to strict, dynamic introduction of [fertility_rate] within [_doc] is not allowed
+[DATA] 2025-10-07T15:11:20.204Z - Elasticsearch'e gönderildi: 1 records Hatalı: 197
+[WARN] 2025-10-07T15:11:20.204Z - Hatalı kayıt: 197
+[INFO] 2025-10-07T15:11:20.204Z - Snapshot güncelleniyor
+[INFO] 2025-10-07T15:11:20.205Z - Snapshot güncelleniyor: 2025-10-07T15:11:20.205Z
+[SUCCESS] 2025-10-07T15:11:20.221Z - Snapshot güncellendi: 0 kayıt
+[SUCCESS] 2025-10-07T15:11:20.221Z - Veri çekme işlemi #341 tamamlandı - Süre: 17.155s
+[INFO] 2025-10-07T15:11:20.222Z - Bir sonraki veri çekme işlemi 4 dakika sonra
+[SUCCESS] 2025-10-07T15:11:20.222Z - Uygulama başlatıldı - Her 4 dakikada bir veri çekilecek
+[INFO] 2025-10-07T15:14:24.209Z - Uygulama başlatılıyor
+[INFO] 2025-10-07T15:14:24.211Z - Index hazırlanıyor: world_population_data
+[INFO] 2025-10-07T15:14:24.211Z - Elasticsearch bağlantısı test ediliyor
+[SUCCESS] 2025-10-07T15:14:24.230Z - Elasticsearch bağlantısı başarılı - Cluster: docker-cluster
+[INFO] 2025-10-07T15:14:24.234Z - Index zaten mevcut: world_population_data
+[INFO] 2025-10-07T15:14:24.235Z - Mevcut mapping kontrol edildi
+[INFO] 2025-10-07T15:14:24.236Z - İlk veri çekme işlemi başlatılıyor
+[INFO] 2025-10-07T15:14:24.237Z - Veri çekme işlemi #893 başlatıldı
+[INFO] 2025-10-07T15:14:24.237Z - Dünya verileri çekiliyor
+[INFO] 2025-10-07T15:14:24.238Z - Dünya verileri için tarayıcı başlatılıyor
+[INFO] 2025-10-07T15:14:24.549Z - Sayfa yükleniyor: https://www.worldometers.info/world-population/
+[INFO] 2025-10-07T15:14:28.402Z - Dünya veri elementleri bekleniyor
+[INFO] 2025-10-07T15:14:28.414Z - Dünya verileri çekiliyor
+[INFO] 2025-10-07T15:14:28.416Z - HAM VERİLER:
+[INFO] 2025-10-07T15:14:28.416Z - - current_population: "8250909495"
+[INFO] 2025-10-07T15:14:28.417Z - - births_today: "275715"
+[INFO] 2025-10-07T15:14:28.417Z - - dth1s_today: "129918"
+[INFO] 2025-10-07T15:14:28.417Z - - absolute_growth: "145797"
+[INFO] 2025-10-07T15:14:28.418Z - - births_this_year: "101485487"
+[INFO] 2025-10-07T15:14:28.418Z - - dth1s_this_year: "47820437"
+[INFO] 2025-10-07T15:14:28.419Z - - absolute_growth_year: "53665050"
+[INFO] 2025-10-07T15:14:28.419Z - Veriler işleniyor
+[INFO] 2025-10-07T15:14:28.420Z - İŞLENMİŞ VERİLER:
+[INFO] 2025-10-07T15:14:28.431Z - - Nüfus: 8.250.909.495
+[INFO] 2025-10-07T15:14:28.431Z - - Bugün Doğum: 275.715
+[INFO] 2025-10-07T15:14:28.432Z - - Bugün Ölüm: 129.918
+[INFO] 2025-10-07T15:14:28.432Z - - Bugün Büyüme: 145.797
+[SUCCESS] 2025-10-07T15:14:28.433Z - Dünya verileri başarıyla alındı
+[INFO] 2025-10-07T15:14:28.525Z - Tarayıcı kapatıldı
+[SUCCESS] 2025-10-07T15:14:28.526Z - Dünya nüfusu: 8.250.909.495
+[INFO] 2025-10-07T15:14:28.526Z - 10 saniye bekleniyor
+[INFO] 2025-10-07T15:14:38.528Z - Ülke verileri çekiliyor
+[INFO] 2025-10-07T15:14:38.529Z - Tarayıcı başlatılıyor
+[INFO] 2025-10-07T15:14:38.790Z - Sayfa yükleniyor: https://www.worldometers.info/world-population/population-by-country/
+[INFO] 2025-10-07T15:14:39.696Z - Tablo yüklenmesi bekleniyor
+[INFO] 2025-10-07T15:14:39.768Z - Tablo verileri çekiliyor
+[INFO] 2025-10-07T15:14:39.775Z - Veriler işleniyor
+[DATA] 2025-10-07T15:14:39.777Z - Ülke verileri işlendi: 232 records 
+[INFO] 2025-10-07T15:14:39.777Z - İlk 3 örnek veri:
+[INFO] 2025-10-07T15:14:39.778Z - 1. india (IN) - 1.463.865.525
+[INFO] 2025-10-07T15:14:39.778Z - 2. china (CN) - 1.416.096.094
+[INFO] 2025-10-07T15:14:39.778Z - 3. us () - 347.275.807
+[INFO] 2025-10-07T15:14:39.861Z - Tarayıcı kapatıldı
+[SUCCESS] 2025-10-07T15:14:39.862Z - Toplam ülke sayısı: 232
+[INFO] 2025-10-07T15:14:39.862Z - Veriler Elasticsearch'e gönderiliyor
+[INFO] 2025-10-07T15:14:39.863Z - Elasticsearch'e gönderilen veri:
+[INFO] 2025-10-07T15:14:39.864Z - - Dünya: Nüfus=8250909495, Doğum=275715, Ölüm=129918
+[INFO] 2025-10-07T15:14:39.864Z - - Ülke: 232 kayıt
+[DATA] 2025-10-07T15:14:39.891Z - Elasticsearch'e gönderildi: 233 records Hatalı: 0
+[INFO] 2025-10-07T15:14:39.892Z - Snapshot güncelleniyor
+[INFO] 2025-10-07T15:14:39.893Z - Snapshot güncelleniyor: 2025-10-07T15:14:39.892Z
+[SUCCESS] 2025-10-07T15:14:39.918Z - Snapshot güncellendi: 0 kayıt
+[SUCCESS] 2025-10-07T15:14:39.919Z - Veri çekme işlemi #893 tamamlandı - Süre: 15.682s
+[INFO] 2025-10-07T15:14:39.919Z - Bir sonraki veri çekme işlemi 4 dakika sonra
+[SUCCESS] 2025-10-07T15:14:39.920Z - Uygulama başlatıldı - Her 4 dakikada bir veri çekilecek
+[INFO] 2025-10-07T15:15:13.597Z - Uygulama başlatılıyor
+[INFO] 2025-10-07T15:15:13.598Z - Index hazırlanıyor: world_population_data
+[INFO] 2025-10-07T15:15:13.599Z - Elasticsearch bağlantısı test ediliyor
+[SUCCESS] 2025-10-07T15:15:13.618Z - Elasticsearch bağlantısı başarılı - Cluster: docker-cluster
+[INFO] 2025-10-07T15:15:13.622Z - Yeni index oluşturuluyor
+[SUCCESS] 2025-10-07T15:15:13.758Z - Index oluşturuldu: world_population_data
+[INFO] 2025-10-07T15:15:13.758Z - İlk veri çekme işlemi başlatılıyor
+[INFO] 2025-10-07T15:15:13.759Z - Veri çekme işlemi #694 başlatıldı
+[INFO] 2025-10-07T15:15:13.759Z - Dünya verileri çekiliyor
+[INFO] 2025-10-07T15:15:13.760Z - Dünya verileri için tarayıcı başlatılıyor
+[INFO] 2025-10-07T15:15:14.046Z - Sayfa yükleniyor: https://www.worldometers.info/world-population/
+[INFO] 2025-10-07T15:15:17.579Z - Dünya veri elementleri bekleniyor
+[INFO] 2025-10-07T15:15:17.601Z - Dünya verileri çekiliyor
+[INFO] 2025-10-07T15:15:17.603Z - HAM VERİLER:
+[INFO] 2025-10-07T15:15:17.603Z - - current_population: "8250909604"
+[INFO] 2025-10-07T15:15:17.603Z - - births_today: "275922"
+[INFO] 2025-10-07T15:15:17.604Z - - dth1s_today: "130016"
+[INFO] 2025-10-07T15:15:17.604Z - - absolute_growth: "145906"
+[INFO] 2025-10-07T15:15:17.604Z - - births_this_year: "101485694"
+[INFO] 2025-10-07T15:15:17.605Z - - dth1s_this_year: "47820535"
+[INFO] 2025-10-07T15:15:17.605Z - - absolute_growth_year: "53665159"
+[INFO] 2025-10-07T15:15:17.606Z - Veriler işleniyor
+[INFO] 2025-10-07T15:15:17.606Z - İŞLENMİŞ VERİLER:
+[INFO] 2025-10-07T15:15:17.618Z - - Nüfus: 8.250.909.604
+[INFO] 2025-10-07T15:15:17.618Z - - Bugün Doğum: 275.922
+[INFO] 2025-10-07T15:15:17.619Z - - Bugün Ölüm: 130.016
+[INFO] 2025-10-07T15:15:17.619Z - - Bugün Büyüme: 145.906
+[SUCCESS] 2025-10-07T15:15:17.620Z - Dünya verileri başarıyla alındı
+[INFO] 2025-10-07T15:15:17.733Z - Tarayıcı kapatıldı
+[SUCCESS] 2025-10-07T15:15:17.733Z - Dünya nüfusu: 8.250.909.604
+[INFO] 2025-10-07T15:15:17.734Z - 10 saniye bekleniyor
+[INFO] 2025-10-07T15:15:27.744Z - Ülke verileri çekiliyor
+[INFO] 2025-10-07T15:15:27.746Z - Tarayıcı başlatılıyor
+[INFO] 2025-10-07T15:15:27.991Z - Sayfa yükleniyor: https://www.worldometers.info/world-population/population-by-country/
+[INFO] 2025-10-07T15:15:28.861Z - Tablo yüklenmesi bekleniyor
+[INFO] 2025-10-07T15:15:28.987Z - Tablo verileri çekiliyor
+[INFO] 2025-10-07T15:15:28.995Z - Veriler işleniyor
+[DATA] 2025-10-07T15:15:28.999Z - Ülke verileri işlendi: 232 records 
+[INFO] 2025-10-07T15:15:28.999Z - İlk 3 örnek veri:
+[INFO] 2025-10-07T15:15:29.000Z - 1. india (IN) - 1.463.865.525
+[INFO] 2025-10-07T15:15:29.000Z - 2. china (CN) - 1.416.096.094
+[INFO] 2025-10-07T15:15:29.001Z - 3. us () - 347.275.807
+[INFO] 2025-10-07T15:15:29.124Z - Tarayıcı kapatıldı
+[SUCCESS] 2025-10-07T15:15:29.125Z - Toplam ülke sayısı: 232
+[INFO] 2025-10-07T15:15:29.125Z - Veriler Elasticsearch'e gönderiliyor
+[INFO] 2025-10-07T15:15:29.127Z - Elasticsearch'e gönderilen veri:
+[INFO] 2025-10-07T15:15:29.127Z - - Dünya: Nüfus=8250909604, Doğum=275922, Ölüm=130016
+[INFO] 2025-10-07T15:15:29.128Z - - Ülke: 232 kayıt
+[DATA] 2025-10-07T15:15:29.164Z - Elasticsearch'e gönderildi: 233 records Hatalı: 0
+[INFO] 2025-10-07T15:15:29.164Z - Snapshot güncelleniyor
+[INFO] 2025-10-07T15:15:29.165Z - Snapshot güncelleniyor: 2025-10-07T15:15:29.165Z
+[SUCCESS] 2025-10-07T15:15:29.196Z - Snapshot güncellendi: 0 kayıt
+[SUCCESS] 2025-10-07T15:15:29.197Z - Veri çekme işlemi #694 tamamlandı - Süre: 15.438s
+[INFO] 2025-10-07T15:15:29.197Z - Bir sonraki veri çekme işlemi 4 dakika sonra
+[SUCCESS] 2025-10-07T15:15:29.198Z - Uygulama başlatıldı - Her 4 dakikada bir veri çekilecek
+[INFO] 2025-10-07T15:19:29.212Z - 4 dakika tamamlandı, yeni veri çekme işlemi başlatılıyor
+[INFO] 2025-10-07T15:19:29.213Z - Veri çekme işlemi #804 başlatıldı
+[INFO] 2025-10-07T15:19:29.213Z - Dünya verileri çekiliyor
+[INFO] 2025-10-07T15:19:29.214Z - Dünya verileri için tarayıcı başlatılıyor
+[INFO] 2025-10-07T15:19:29.481Z - Sayfa yükleniyor: https://www.worldometers.info/world-population/
+[INFO] 2025-10-07T15:19:33.876Z - Dünya veri elementleri bekleniyor
+[INFO] 2025-10-07T15:19:33.886Z - Dünya verileri çekiliyor
+[INFO] 2025-10-07T15:19:33.888Z - HAM VERİLER:
+[INFO] 2025-10-07T15:19:33.888Z - - current_population: "8250910173"
+[INFO] 2025-10-07T15:19:33.889Z - - births_today: "276998"
+[INFO] 2025-10-07T15:19:33.889Z - - dth1s_today: "130523"
+[INFO] 2025-10-07T15:19:33.890Z - - absolute_growth: "146475"
+[INFO] 2025-10-07T15:19:33.890Z - - births_this_year: "101486770"
+[INFO] 2025-10-07T15:19:33.891Z - - dth1s_this_year: "47821042"
+[INFO] 2025-10-07T15:19:33.891Z - - absolute_growth_year: "53665728"
+[INFO] 2025-10-07T15:19:33.892Z - Veriler işleniyor
+[INFO] 2025-10-07T15:19:33.892Z - İŞLENMİŞ VERİLER:
+[INFO] 2025-10-07T15:19:33.893Z - - Nüfus: 8.250.910.173
+[INFO] 2025-10-07T15:19:33.894Z - - Bugün Doğum: 276.998
+[INFO] 2025-10-07T15:19:33.894Z - - Bugün Ölüm: 130.523
+[INFO] 2025-10-07T15:19:33.895Z - - Bugün Büyüme: 146.475
+[SUCCESS] 2025-10-07T15:19:33.895Z - Dünya verileri başarıyla alındı
+[INFO] 2025-10-07T15:19:33.991Z - Tarayıcı kapatıldı
+[SUCCESS] 2025-10-07T15:19:33.992Z - Dünya nüfusu: 8.250.910.173
+[INFO] 2025-10-07T15:19:33.992Z - 10 saniye bekleniyor
+[INFO] 2025-10-07T15:19:43.998Z - Ülke verileri çekiliyor
+[INFO] 2025-10-07T15:19:43.999Z - Tarayıcı başlatılıyor
+[INFO] 2025-10-07T15:19:44.247Z - Sayfa yükleniyor: https://www.worldometers.info/world-population/population-by-country/
+[INFO] 2025-10-07T15:19:45.128Z - Tablo yüklenmesi bekleniyor
+[INFO] 2025-10-07T15:19:45.200Z - Tablo verileri çekiliyor
+[INFO] 2025-10-07T15:19:45.206Z - Veriler işleniyor
+[DATA] 2025-10-07T15:19:45.208Z - Ülke verileri işlendi: 232 records 
+[INFO] 2025-10-07T15:19:45.209Z - İlk 3 örnek veri:
+[INFO] 2025-10-07T15:19:45.209Z - 1. india (IN) - 1.463.865.525
+[INFO] 2025-10-07T15:19:45.210Z - 2. china (CN) - 1.416.096.094
+[INFO] 2025-10-07T15:19:45.210Z - 3. us () - 347.275.807
+[INFO] 2025-10-07T15:19:45.317Z - Tarayıcı kapatıldı
+[SUCCESS] 2025-10-07T15:19:45.317Z - Toplam ülke sayısı: 232
+[INFO] 2025-10-07T15:19:45.318Z - Veriler Elasticsearch'e gönderiliyor
+[INFO] 2025-10-07T15:19:45.319Z - Elasticsearch'e gönderilen veri:
+[INFO] 2025-10-07T15:19:45.319Z - - Dünya: Nüfus=8250910173, Doğum=276998, Ölüm=130523
+[INFO] 2025-10-07T15:19:45.319Z - - Ülke: 232 kayıt
+[DATA] 2025-10-07T15:19:45.383Z - Elasticsearch'e gönderildi: 233 records Hatalı: 0
+[INFO] 2025-10-07T15:19:45.384Z - Snapshot güncelleniyor
+[INFO] 2025-10-07T15:19:45.384Z - Snapshot güncelleniyor: 2025-10-07T15:19:45.384Z
+[SUCCESS] 2025-10-07T15:19:45.410Z - Snapshot güncellendi: 0 kayıt
+[SUCCESS] 2025-10-07T15:19:45.410Z - Veri çekme işlemi #804 tamamlandı - Süre: 16.197s
+[INFO] 2025-10-07T15:19:45.411Z - Bir sonraki veri çekme işlemi 4 dakika sonra
+[INFO] 2025-10-07T15:23:29.227Z - 4 dakika tamamlandı, yeni veri çekme işlemi başlatılıyor
+[INFO] 2025-10-07T15:23:29.233Z - Veri çekme işlemi #319 başlatıldı
+[INFO] 2025-10-07T15:23:29.234Z - Dünya verileri çekiliyor
+[INFO] 2025-10-07T15:23:29.236Z - Dünya verileri için tarayıcı başlatılıyor
+[INFO] 2025-10-07T15:23:29.694Z - Sayfa yükleniyor: https://www.worldometers.info/world-population/
+[INFO] 2025-10-07T15:23:34.563Z - Dünya veri elementleri bekleniyor
+[INFO] 2025-10-07T15:23:34.576Z - Dünya verileri çekiliyor
+[INFO] 2025-10-07T15:23:34.578Z - HAM VERİLER:
+[INFO] 2025-10-07T15:23:34.578Z - - current_population: "8250910707"
+[INFO] 2025-10-07T15:23:34.578Z - - births_today: "278008"
+[INFO] 2025-10-07T15:23:34.579Z - - dth1s_today: "130999"
+[INFO] 2025-10-07T15:23:34.579Z - - absolute_growth: "147009"
+[INFO] 2025-10-07T15:23:34.579Z - - births_this_year: "101487780"
+[INFO] 2025-10-07T15:23:34.580Z - - dth1s_this_year: "47821518"
+[INFO] 2025-10-07T15:23:34.580Z - - absolute_growth_year: "53666262"
+[INFO] 2025-10-07T15:23:34.581Z - Veriler işleniyor
+[INFO] 2025-10-07T15:23:34.581Z - İŞLENMİŞ VERİLER:
+[INFO] 2025-10-07T15:23:34.581Z - - Nüfus: 8.250.910.707
+[INFO] 2025-10-07T15:23:34.582Z - - Bugün Doğum: 278.008
+[INFO] 2025-10-07T15:23:34.582Z - - Bugün Ölüm: 130.999
+[INFO] 2025-10-07T15:23:34.583Z - - Bugün Büyüme: 147.009
+[SUCCESS] 2025-10-07T15:23:34.583Z - Dünya verileri başarıyla alındı
+[INFO] 2025-10-07T15:23:34.676Z - Tarayıcı kapatıldı
+[SUCCESS] 2025-10-07T15:23:34.677Z - Dünya nüfusu: 8.250.910.707
+[INFO] 2025-10-07T15:23:34.677Z - 10 saniye bekleniyor
+[INFO] 2025-10-07T15:23:44.693Z - Ülke verileri çekiliyor
+[INFO] 2025-10-07T15:23:44.694Z - Tarayıcı başlatılıyor
+[INFO] 2025-10-07T15:23:44.951Z - Sayfa yükleniyor: https://www.worldometers.info/world-population/population-by-country/
+[INFO] 2025-10-07T15:23:46.106Z - Tablo yüklenmesi bekleniyor
+[INFO] 2025-10-07T15:23:46.170Z - Tablo verileri çekiliyor
+[INFO] 2025-10-07T15:23:46.180Z - Veriler işleniyor
+[DATA] 2025-10-07T15:23:46.183Z - Ülke verileri işlendi: 232 records 
+[INFO] 2025-10-07T15:23:46.183Z - İlk 3 örnek veri:
+[INFO] 2025-10-07T15:23:46.184Z - 1. india (IN) - 1.463.865.525
+[INFO] 2025-10-07T15:23:46.185Z - 2. china (CN) - 1.416.096.094
+[INFO] 2025-10-07T15:23:46.185Z - 3. us () - 347.275.807
+[INFO] 2025-10-07T15:23:46.271Z - Tarayıcı kapatıldı
+[SUCCESS] 2025-10-07T15:23:46.271Z - Toplam ülke sayısı: 232
+[INFO] 2025-10-07T15:23:46.272Z - Veriler Elasticsearch'e gönderiliyor
+[INFO] 2025-10-07T15:23:46.272Z - Elasticsearch'e gönderilen veri:
+[INFO] 2025-10-07T15:23:46.273Z - - Dünya: Nüfus=8250910707, Doğum=278008, Ölüm=130999
+[INFO] 2025-10-07T15:23:46.273Z - - Ülke: 232 kayıt
+[DATA] 2025-10-07T15:23:46.342Z - Elasticsearch'e gönderildi: 233 records Hatalı: 0
+[INFO] 2025-10-07T15:23:46.342Z - Snapshot güncelleniyor
+[INFO] 2025-10-07T15:23:46.343Z - Snapshot güncelleniyor: 2025-10-07T15:23:46.343Z
+[SUCCESS] 2025-10-07T15:23:46.362Z - Snapshot güncellendi: 0 kayıt
+[SUCCESS] 2025-10-07T15:23:46.363Z - Veri çekme işlemi #319 tamamlandı - Süre: 17.13s
+[INFO] 2025-10-07T15:23:46.363Z - Bir sonraki veri çekme işlemi 4 dakika sonra
+[INFO] 2025-10-07T15:27:29.240Z - 4 dakika tamamlandı, yeni veri çekme işlemi başlatılıyor
+[INFO] 2025-10-07T15:27:29.242Z - Veri çekme işlemi #56 başlatıldı
+[INFO] 2025-10-07T15:27:29.243Z - Dünya verileri çekiliyor
+[INFO] 2025-10-07T15:27:29.244Z - Dünya verileri için tarayıcı başlatılıyor
+[INFO] 2025-10-07T15:27:29.631Z - Sayfa yükleniyor: https://www.worldometers.info/world-population/
+[INFO] 2025-10-07T15:27:32.765Z - Dünya veri elementleri bekleniyor
+[INFO] 2025-10-07T15:27:32.776Z - Dünya verileri çekiliyor
+[INFO] 2025-10-07T15:27:32.777Z - HAM VERİLER:
+[INFO] 2025-10-07T15:27:32.777Z - - current_population: "8250911237"
+[INFO] 2025-10-07T15:27:32.778Z - - births_today: "279009"
+[INFO] 2025-10-07T15:27:32.778Z - - dth1s_today: "131470"
+[INFO] 2025-10-07T15:27:32.779Z - - absolute_growth: "147539"
+[INFO] 2025-10-07T15:27:32.779Z - - births_this_year: "101488781"
+[INFO] 2025-10-07T15:27:32.780Z - - dth1s_this_year: "47821989"
+[INFO] 2025-10-07T15:27:32.780Z - - absolute_growth_year: "53666792"
+[INFO] 2025-10-07T15:27:32.780Z - Veriler işleniyor
+[INFO] 2025-10-07T15:27:32.781Z - İŞLENMİŞ VERİLER:
+[INFO] 2025-10-07T15:27:32.781Z - - Nüfus: 8.250.911.237
+[INFO] 2025-10-07T15:27:32.781Z - - Bugün Doğum: 279.009
+[INFO] 2025-10-07T15:27:32.782Z - - Bugün Ölüm: 131.470
+[INFO] 2025-10-07T15:27:32.782Z - - Bugün Büyüme: 147.539
+[SUCCESS] 2025-10-07T15:27:32.783Z - Dünya verileri başarıyla alındı
+[INFO] 2025-10-07T15:27:32.902Z - Tarayıcı kapatıldı
+[SUCCESS] 2025-10-07T15:27:32.903Z - Dünya nüfusu: 8.250.911.237
+[INFO] 2025-10-07T15:27:32.904Z - 10 saniye bekleniyor
+[INFO] 2025-10-07T15:27:42.914Z - Ülke verileri çekiliyor
+[INFO] 2025-10-07T15:27:42.914Z - Tarayıcı başlatılıyor
+[INFO] 2025-10-07T15:27:43.152Z - Sayfa yükleniyor: https://www.worldometers.info/world-population/population-by-country/
+[INFO] 2025-10-07T15:27:44.039Z - Tablo yüklenmesi bekleniyor
+[INFO] 2025-10-07T15:27:44.112Z - Tablo verileri çekiliyor
+[INFO] 2025-10-07T15:27:44.118Z - Veriler işleniyor
+[DATA] 2025-10-07T15:27:44.119Z - Ülke verileri işlendi: 232 records 
+[INFO] 2025-10-07T15:27:44.119Z - İlk 3 örnek veri:
+[INFO] 2025-10-07T15:27:44.120Z - 1. india (IN) - 1.463.865.525
+[INFO] 2025-10-07T15:27:44.120Z - 2. china (CN) - 1.416.096.094
+[INFO] 2025-10-07T15:27:44.120Z - 3. us () - 347.275.807
+[INFO] 2025-10-07T15:27:44.756Z - Tarayıcı kapatıldı
+[SUCCESS] 2025-10-07T15:27:44.757Z - Toplam ülke sayısı: 232
+[INFO] 2025-10-07T15:27:44.757Z - Veriler Elasticsearch'e gönderiliyor
+[INFO] 2025-10-07T15:27:44.758Z - Elasticsearch'e gönderilen veri:
+[INFO] 2025-10-07T15:27:44.758Z - - Dünya: Nüfus=8250911237, Doğum=279009, Ölüm=131470
+[INFO] 2025-10-07T15:27:44.759Z - - Ülke: 232 kayıt
+[DATA] 2025-10-07T15:27:44.827Z - Elasticsearch'e gönderildi: 233 records Hatalı: 0
+[INFO] 2025-10-07T15:27:44.827Z - Snapshot güncelleniyor
+[INFO] 2025-10-07T15:27:44.828Z - Snapshot güncelleniyor: 2025-10-07T15:27:44.828Z
+[SUCCESS] 2025-10-07T15:27:44.846Z - Snapshot güncellendi: 0 kayıt
+[SUCCESS] 2025-10-07T15:27:44.846Z - Veri çekme işlemi #56 tamamlandı - Süre: 15.604s
+[INFO] 2025-10-07T15:27:44.847Z - Bir sonraki veri çekme işlemi 4 dakika sonra
+[INFO] 2025-10-07T15:35:32.356Z - Uygulama başlatılıyor
+[INFO] 2025-10-07T15:35:32.357Z - Index hazırlanıyor: world_population_data
+[INFO] 2025-10-07T15:35:32.358Z - Elasticsearch bağlantısı test ediliyor
+[SUCCESS] 2025-10-07T15:35:32.383Z - Elasticsearch bağlantısı başarılı - Cluster: docker-cluster
+[INFO] 2025-10-07T15:35:32.387Z - Index zaten mevcut: world_population_data
+[INFO] 2025-10-07T15:35:32.389Z - Mevcut mapping kontrol edildi
+[INFO] 2025-10-07T15:35:32.390Z - İlk veri çekme işlemi başlatılıyor
+[INFO] 2025-10-07T15:35:32.390Z - Veri çekme işlemi #154 başlatıldı
+[INFO] 2025-10-07T15:35:32.390Z - Dünya verileri çekiliyor
+[INFO] 2025-10-07T15:35:32.391Z - Dünya verileri için tarayıcı başlatılıyor
+[INFO] 2025-10-07T15:35:32.744Z - Sayfa yükleniyor: https://www.worldometers.info/world-population/
+[INFO] 2025-10-07T15:35:38.141Z - Dünya veri elementleri bekleniyor
+[INFO] 2025-10-07T15:35:38.154Z - Dünya verileri çekiliyor
+[INFO] 2025-10-07T15:35:38.156Z - HAM VERİLER:
+[INFO] 2025-10-07T15:35:38.156Z - - current_population: "8250912316"
+[INFO] 2025-10-07T15:35:38.157Z - - births_today: "281047"
+[INFO] 2025-10-07T15:35:38.157Z - - dth1s_today: "132430"
+[INFO] 2025-10-07T15:35:38.157Z - - absolute_growth: "148617"
+[INFO] 2025-10-07T15:35:38.158Z - - births_this_year: "101490819"
+[INFO] 2025-10-07T15:35:38.158Z - - dth1s_this_year: "47822949"
+[INFO] 2025-10-07T15:35:38.158Z - - absolute_growth_year: "53667870"
+[INFO] 2025-10-07T15:35:38.159Z - Veriler işleniyor
+[INFO] 2025-10-07T15:35:38.159Z - İŞLENMİŞ VERİLER:
+[INFO] 2025-10-07T15:35:38.171Z - - Nüfus: 8.250.912.316
+[INFO] 2025-10-07T15:35:38.172Z - - Bugün Doğum: 281.047
+[INFO] 2025-10-07T15:35:38.173Z - - Bugün Ölüm: 132.430
+[INFO] 2025-10-07T15:35:38.173Z - - Bugün Büyüme: 148.617
+[SUCCESS] 2025-10-07T15:35:38.173Z - Dünya verileri başarıyla alındı
+[INFO] 2025-10-07T15:35:38.285Z - Tarayıcı kapatıldı
+[SUCCESS] 2025-10-07T15:35:38.285Z - Dünya nüfusu: 8.250.912.316
+[INFO] 2025-10-07T15:35:38.286Z - 10 saniye bekleniyor
+[INFO] 2025-10-07T15:35:48.293Z - Ülke verileri çekiliyor
+[INFO] 2025-10-07T15:35:48.295Z - Tarayıcı başlatılıyor
+[INFO] 2025-10-07T15:35:48.546Z - Sayfa yükleniyor: https://www.worldometers.info/world-population/population-by-country/
+[INFO] 2025-10-07T15:35:49.583Z - Tablo yüklenmesi bekleniyor
+[INFO] 2025-10-07T15:35:49.660Z - Tablo verileri çekiliyor
+[INFO] 2025-10-07T15:35:49.668Z - Veriler işleniyor
+[DATA] 2025-10-07T15:35:49.673Z - Ülke verileri işlendi: 232 records 
+[INFO] 2025-10-07T15:35:49.673Z - İlk 3 örnek veri:
+[INFO] 2025-10-07T15:35:49.674Z - 1. india (IN) - 1.463.865.525
+[INFO] 2025-10-07T15:35:49.675Z - 2. china (CN) - 1.416.096.094
+[INFO] 2025-10-07T15:35:49.675Z - 3. us () - 347.275.807
+[INFO] 2025-10-07T15:35:49.783Z - Tarayıcı kapatıldı
+[SUCCESS] 2025-10-07T15:35:49.784Z - Toplam ülke sayısı: 232
+[INFO] 2025-10-07T15:35:49.785Z - Veriler Elasticsearch'e gönderiliyor
+[INFO] 2025-10-07T15:35:49.786Z - Elasticsearch'e gönderilen veri:
+[INFO] 2025-10-07T15:35:49.787Z - - Dünya: Nüfus=8250912316, Doğum=281047, Ölüm=132430
+[INFO] 2025-10-07T15:35:49.788Z - - Ülke: 232 kayıt
+[DATA] 2025-10-07T15:35:49.907Z - Elasticsearch'e gönderildi: 233 records Hatalı: 0
+[INFO] 2025-10-07T15:35:49.908Z - Snapshot güncelleniyor
+[INFO] 2025-10-07T15:35:49.909Z - Snapshot güncelleniyor: 2025-10-07T15:35:49.909Z
+[SUCCESS] 2025-10-07T15:35:49.947Z - Snapshot güncellendi: 0 kayıt
+[SUCCESS] 2025-10-07T15:35:49.948Z - Veri çekme işlemi #154 tamamlandı - Süre: 17.558s
+[INFO] 2025-10-07T15:35:49.948Z - Bir sonraki veri çekme işlemi 4 dakika sonra
+[SUCCESS] 2025-10-07T15:35:49.949Z - Uygulama başlatıldı - Her 4 dakikada bir veri çekilecek
